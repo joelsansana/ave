@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../data/prayers_data.dart';
 
 class ReadingsScreen extends StatefulWidget {
   const ReadingsScreen({super.key});
@@ -14,7 +15,7 @@ class _ReadingsScreenState extends State<ReadingsScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -33,7 +34,8 @@ class _ReadingsScreenState extends State<ReadingsScreen>
           controller: _tabController,
           tabs: const [
             Tab(text: 'Diário'),
-            Tab(text: 'Lectio'),
+            Tab(text: 'Rosário'),
+            Tab(text: 'Via Sacra'),
             Tab(text: 'Orações'),
           ],
         ),
@@ -42,7 +44,8 @@ class _ReadingsScreenState extends State<ReadingsScreen>
         controller: _tabController,
         children: const [
           _DailyReadingsTab(),
-          _LectioDivinaTab(),
+          _RosarioTab(),
+          _ViaSacraTab(),
           _PrayersTab(),
         ],
       ),
@@ -129,11 +132,138 @@ class _ReadingCard extends StatelessWidget {
   }
 }
 
-class _LectioDivinaTab extends StatelessWidget {
-  const _LectioDivinaTab();
+class _RosarioTab extends StatelessWidget {
+  const _RosarioTab();
 
   @override
   Widget build(BuildContext context) {
+    final rosario = PrayersData.Rosario;
+    
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Mistérios do Dia
+          Card(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Mistérios de Hoje',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Quarta-feira: Mistérios Gloriosos',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Lista de orações
+          ...['Sinal da Cruz', 'Credo', 'Oferecimento', 'Pai Nosso', 'Ave Maria', 'Glória', 'Salve Rainha'].map((prayer) => 
+            Card(
+              margin: const EdgeInsets.only(bottom: 8),
+              child: ListTile(
+                leading: const Icon(Icons.church),
+                title: Text(prayer),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => _showPrayerDialog(context, prayer),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 16),
+          
+          // Mistérios
+          Text(
+            'Mistérios',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 8),
+          
+          _MysteriosSection(
+            title: 'Mistérios Gozosos',
+            subtitle: 'Segunda e Quinta',
+            color: Colors.yellow,
+          ),
+          _MysteriosSection(
+            title: 'Mistérios Dolorosos',
+            subtitle: 'Terça e Sexta',
+            color: Colors.red,
+          ),
+          _MysteriosSection(
+            title: 'Mistérios Gloriosos',
+            subtitle: 'Quarta, Sábado e Domingo',
+            color: Colors.blue,
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showPrayerDialog(BuildContext context, String prayer) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(prayer),
+        content: const SingleChildScrollView(
+          child: Text('Conteúdo completo do Rosário...\n\n(em desenvolvimento)'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Fechar'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MysteriosSection extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final Color color;
+
+  const _MysteriosSection({
+    required this.title,
+    required this.subtitle,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 8),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: color,
+          child: const Icon(Icons.star, color: Colors.white, size: 20),
+        ),
+        title: Text(title),
+        subtitle: Text(subtitle),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () {},
+      ),
+    );
+  }
+}
+
+class _ViaSacraTab extends StatelessWidget {
+  const _ViaSacraTab();
+
+  @override
+  Widget build(BuildContext context) {
+    final viaSacra = PrayersData.ViaSacra;
+    
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -147,12 +277,12 @@ class _LectioDivinaTab extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Lectio Divina',
+                    'Via Sacra',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Uma forma lenta e orante de ler a Escritura',
+                    '14 estações de meditação',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
@@ -161,74 +291,26 @@ class _LectioDivinaTab extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           
-          _LectioStep(
-            step: '1',
-            title: 'Lectio (Leitura)',
-            description: 'Lê o trecho lentamente. Que palavras ou frases se destacam?',
-            color: Colors.blue,
-          ),
-          _LectioStep(
-            step: '2',
-            title: 'Meditatio (Meditação)',
-            description: 'Reflecte sobre o que Deus te está a dizer. O que isto significa para a tua vida?',
-            color: Colors.green,
-          ),
-          _LectioStep(
-            step: '3',
-            title: 'Oratio (Oração)',
-            description: 'Responde a Deus em oração. O que diz o teu coração?',
-            color: Colors.orange,
-          ),
-          _LectioStep(
-            step: '4',
-            title: 'Contemplatio (Contemplação)',
-            description: 'Repousa na presença de Deus. Simplesmente está com Ele.',
-            color: Colors.purple,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _LectioStep extends StatelessWidget {
-  final String step;
-  final String title;
-  final String description;
-  final Color color;
-
-  const _LectioStep({
-    required this.step,
-    required this.title,
-    required this.description,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CircleAvatar(
-              backgroundColor: color,
-              child: Text(step, style: const TextStyle(color: Colors.white)),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 4),
-                  Text(description),
-                ],
+          // Lista das estações
+          ...List.generate(14, (index) => 
+            Card(
+              margin: const EdgeInsets.only(bottom: 8),
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Colors.red.shade700,
+                  child: Text(
+                    '${index + 1}',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+                title: Text('Estação ${index + 1}'),
+                subtitle: const Text('Tap para meditar'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () {},
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -238,50 +320,27 @@ class _PrayersTab extends StatelessWidget {
   const _PrayersTab();
 
   @override
-  Widget build(BuildContext context) {
-    return ListView(
+  Widget build(context) {
+    final prayers = PrayersData.OraçõesDiárias;
+    
+    return ListView.builder(
       padding: const EdgeInsets.all(16),
-      children: [
-        _PrayerCard(
-          title: 'Oração da Manhã',
-          text: 'Senhor, obrigado por este novo dia. Guia os meus passos e ajuda-me a viver para Ti.',
-        ),
-        _PrayerCard(
-          title: 'Oração da Noite',
-          text: 'Obrigado por este dia. Perdoa os meus pecados e abençoa o meu sono.',
-        ),
-        _PrayerCard(
-          title: 'Oração a São Miguel',
-          text: 'São Miguel Arcanjo, defendei-nos na batalha...',
-        ),
-        _PrayerCard(
-          title: 'Ave Maria',
-          text: 'Ave Maria, cheia de graça, o Connosco está...',
-        ),
-      ],
-    );
-  }
-}
-
-class _PrayerCard extends StatelessWidget {
-  final String title;
-  final String text;
-
-  const _PrayerCard({required this.title, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: ExpansionTile(
-        title: Text(title),
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(text),
+      itemCount: prayers.length,
+      itemBuilder: (context, index) {
+        final prayer = prayers[index];
+        return Card(
+          margin: const EdgeInsets.only(bottom: 12),
+          child: ExpansionTile(
+            title: Text(prayer['title']!),
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(prayer['text']!),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
