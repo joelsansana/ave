@@ -1,6 +1,6 @@
-# Hábitos - Catholic Habits
+# Hábitos
 
-Uma aplicação Flutter para ajudar Catholics a construir hábitos diários de fé.
+Uma aplicação Flutter para ajudar Católicos a construir hábitos diários de fé.
 
 ## Getting Started
 
