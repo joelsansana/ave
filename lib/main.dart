@@ -3,6 +3,7 @@ import 'screens/home_screen.dart';
 import 'screens/calendar_screen.dart';
 import 'screens/readings_screen.dart';
 import 'screens/profile_screen.dart';
+import 'screens/nfp_screen.dart';
 
 void main() {
   runApp(const CatholicHabitsApp());
@@ -14,7 +15,7 @@ class CatholicHabitsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Hábitos - Hábitos Católicos',
+      title: 'Hábitos',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -50,6 +51,7 @@ class _MainNavigationState extends State<MainNavigation> {
     HomeScreen(),
     CalendarScreen(),
     ReadingsScreen(),
+    NFPScreen(),
     ProfileScreen(),
   ];
 
@@ -79,6 +81,11 @@ class _MainNavigationState extends State<MainNavigation> {
             icon: Icon(Icons.book_outlined),
             selectedIcon: Icon(Icons.book),
             label: 'Ler',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.favorite_outline),
+            selectedIcon: Icon(Icons.favorite),
+            label: 'Ciclo',
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outlined),
