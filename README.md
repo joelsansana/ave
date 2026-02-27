@@ -1,6 +1,6 @@
-# Ave - Catholic Habits
+# Hábitos - Catholic Habits
 
-A Flutter app to help Catholics build daily faith habits.
+Uma aplicação Flutter para ajudar Catholics a construir hábitos diários de fé.
 
 ## Getting Started
 
@@ -12,7 +12,7 @@ A Flutter app to help Catholics build daily faith habits.
 ### Install Dependencies
 
 ```bash
-cd catholic_habits
+cd habitos
 flutter pub get
 ```
 
@@ -24,25 +24,31 @@ flutter run
 
 ## Features
 
-- [ ] Daily habit tracking with reminders
-- [ ] Saint of the Day
-- [ ] Liturgical calendar
-- [ ] Lectio Divina guide
-- [ ] Faith journal with AI insights
-- [ ] Family profiles
+- [ ] Tracking de hábitos diários com lembretes
+- [ ] Santo do Dia
+- [ ] Calendário litúrgico
+- [ ] Guia Lectio Divina
+- [ ] Journal de fé com insights de IA
+- [ ] Perfis familiares
 
 ## Screens
 
-- Home (habits + saint)
-- Calendar (streaks)
-- Read (daily readings)
-- Profile (stats + settings)
+- Home (hábitos + santo)
+- Calendar (sequências)
+- Read (leituras diárias)
+- Profile (estatísticas + configurações)
 
 ## Tech Stack
 
 - Flutter (iOS, Android, Web)
 - Firebase (Auth, Firestore)
 - OpenAI (journal insights)
+
+## Nome
+
+"Hábitos" é um jogo de palavras:
+- **Hábitos** = Daily habits (o que a app faz)
+- **Hábito** = Religious habit (veste talar)
 
 ## License
 

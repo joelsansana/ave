@@ -14,7 +14,7 @@ class CatholicHabitsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ave - Hábitos Católicos',
+      title: 'Hábitos - Hábitos Católicos',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
