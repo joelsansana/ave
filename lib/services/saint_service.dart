@@ -1,48 +1,60 @@
 import '../models/saint.dart';
 
 class SaintService {
-  // Demo data - in production, fetch from API
+  // Portuguese saints data
   static final List<Saint> _saints = [
     const Saint(
       id: '1',
-      name: 'St. Francis of Assisi',
-      feastDay: 'October 4',
-      bio: 'Founder of the Franciscan Order. Known for his love of nature and poverty.',
-      quote: 'Start by doing what\'s necessary; then do what\'s possible; and suddenly you are doing the impossible.',
+      name: 'São Francisco de Assis',
+      feastDay: '4 de Outubro',
+      bio: 'Fundador da Ordem Franciscana. Conhecido pelo seu amor à natureza e pobreza.',
+      quote: 'Começa por fazer o necessário; depois faz o que é possível; e de repente estarás a fazer o impossível.',
     ),
     const Saint(
       id: '2',
-      name: 'St. Teresa of Avila',
-      feastDay: 'October 15',
-      bio: 'Spanish mystic and Carmelite reformer. First woman to be named a Doctor of the Church.',
-      quote: 'God, give me the grace to be recollected. Let me have the humility to be under all.',
+      name: 'Santa Teresa de Ávila',
+      feastDay: '15 de Outubro',
+      bio: 'Mística espanhola e reformadora carmelita. Primeira mulher a ser nomeada Doutora da Igreja.',
+      quote: 'Deus, dá-me a graça de estar recolhora. Que eu tenha a humildade de estar sob todos.',
     ),
     const Saint(
       id: '3',
-      name: 'St. Josemaría Escrivá',
-      feastDay: 'October 26',
-      bio: 'Founder of Opus Dei. Saint of the ordinary work.',
-      quote: 'Holiness is not a question of feeling. It is a question of action.',
+      name: 'São Josemaría Escrivá',
+      feastDay: '26 de Outubro',
+      bio: 'Fundador do Opus Dei. Santo do trabalho ordinário.',
+      quote: 'A santidade não é uma questão de sentir. É uma questão de agir.',
     ),
     const Saint(
       id: '4',
-      name: 'St. John Paul II',
-      feastDay: 'October 22',
-      bio: 'Pope who helped end communism and promote religious freedom.',
-      quote: 'Do not be afraid. Open wide the doors to Christ.',
+      name: 'São João Paulo II',
+      feastDay: '22 de Outubro',
+      bio: 'Papa que ajudou a terminar o comunismo e promover a liberdade religiosa.',
+      quote: 'Não tenhas medo. Abre bem as portas a Cristo.',
     ),
     const Saint(
       id: '5',
-      name: 'St. Augustine',
-      feastDay: 'August 28',
-      bio: 'One of the most influential Church Fathers. Wrote Confessions.',
-      quote: 'Our hearts are restless until they rest in You.',
+      name: 'Santo Agostinho',
+      feastDay: '28 de Agosto',
+      bio: 'Um dos Padres mais influentes da Igreja. Escreveu as Confissões.',
+      quote: 'Os nossos corações estão inquietos até que descansem em Ti.',
+    ),
+    const Saint(
+      id: '6',
+      name: 'Santo António',
+      feastDay: '13 de Junho',
+      bio: 'Padroeiro de Portugal. Known como o Santo que encontra coisas perdidas.',
+      quote: 'Se queremos servir a Deus, devemos servir os outros.',
+    ),
+    const Saint(
+      id: '7',
+      name: 'Santa Teresa de Lisieux',
+      feastDay: '1 de Outubro',
+      bio: ' Carmelita francesa. Doctora da Igreja pelo seu "caminho da infância espiritual".',
+      quote: 'O amor é tudo. O amor é a essência de todas as vocações.',
     ),
   ];
 
   static Future<Saint> getSaintOfDay() async {
-    // In production, fetch from API based on date
-    // For demo, return random saint
     await Future.delayed(const Duration(milliseconds: 100));
     final dayOfYear = DateTime.now().difference(DateTime(DateTime.now().year, 1, 1)).inDays;
     return _saints[dayOfYear % _saints.length];

@@ -14,7 +14,8 @@ class CatholicHabitsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ave - Catholic Habits',
+      title: 'Ave - Hábitos Católicos',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurple,
@@ -67,22 +68,22 @@ class _MainNavigationState extends State<MainNavigation> {
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Início',
           ),
           NavigationDestination(
             icon: Icon(Icons.calendar_month_outlined),
             selectedIcon: Icon(Icons.calendar_month),
-            label: 'Calendar',
+            label: 'Calendário',
           ),
           NavigationDestination(
             icon: Icon(Icons.book_outlined),
             selectedIcon: Icon(Icons.book),
-            label: 'Read',
+            label: 'Ler',
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outlined),
             selectedIcon: Icon(Icons.person),
-            label: 'Profile',
+            label: 'Perfil',
           ),
         ],
       ),

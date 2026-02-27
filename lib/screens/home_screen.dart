@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadSaintOfDay();
   }
 
-  Future<void> _loadSaintDay() async {
+  Future<void> _loadSaintOfDay() async {
     final saint = await SaintService.getSaintOfDay();
     setState(() {
       _saintOfDay = saint;
@@ -52,12 +52,12 @@ class _HomeScreenState extends State<HomeScreen> {
             if (_saintOfDay != null)
               _SaintCard(saint: _saintOfDay!)
             else
-              const _LoadingCard(title: 'Saint of the Day'),
+              const _LoadingCard(title: 'Santo do Dia'),
             const SizedBox(height: 16),
 
             // Today's Habits
             Text(
-              'Today\'s Habits',
+              'Hábitos de Hoje',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 8),
@@ -74,22 +74,22 @@ class _HomeScreenState extends State<HomeScreen> {
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Início',
           ),
           NavigationDestination(
             icon: Icon(Icons.calendar_month_outlined),
             selectedIcon: Icon(Icons.calendar_month),
-            label: 'Calendar',
+            label: 'Calendário',
           ),
           NavigationDestination(
             icon: Icon(Icons.book_outlined),
             selectedIcon: Icon(Icons.book),
-            label: 'Read',
+            label: 'Ler',
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outlined),
             selectedIcon: Icon(Icons.person),
-            label: 'Profile',
+            label: 'Perfil',
           ),
         ],
       ),
@@ -97,16 +97,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   String _getLiturgicalSeason(DateTime date) {
-    // Simple season detection
     final month = date.month;
     if (month >= 1 && month <= 2 || month == 12) {
-      return 'Advent';
+      return 'Advento';
     } else if (month >= 3 && month <= 5) {
-      return 'Lent';
+      return 'Quaresma';
     } else if (month == 6) {
-      return 'Ordinary Time';
+      return 'Tempo Comum';
     } else {
-      return 'Ordinary Time';
+      return 'Tempo Comum';
     }
   }
 }
@@ -133,7 +132,7 @@ class _LiturgicalCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
-                  'Liturgical Season',
+                  'Tempo Litúrgico',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
@@ -163,7 +162,7 @@ class _SaintCard extends StatelessWidget {
                 const Icon(Icons.person),
                 const SizedBox(width: 8),
                 Text(
-                  'Saint of the Day',
+                  'Santo do Dia',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
@@ -174,7 +173,7 @@ class _SaintCard extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             Text(
-              'Feast: ${saint.feastDay}',
+              'Festividade: ${saint.feastDay}',
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 8),

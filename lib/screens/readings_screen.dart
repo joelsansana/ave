@@ -27,14 +27,14 @@ class _ReadingsScreenState extends State<ReadingsScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Read'),
+        title: const Text('Ler'),
         centerTitle: true,
         bottom: TabBar(
           controller: _tabController,
           tabs: const [
-            Tab(text: 'Daily'),
+            Tab(text: 'Diário'),
             Tab(text: 'Lectio'),
-            Tab(text: 'Prayers'),
+            Tab(text: 'Orações'),
           ],
         ),
       ),
@@ -61,29 +61,29 @@ class _DailyReadingsTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'February 27, 2026',
+            '27 de Fevereiro de 2026',
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 16),
           
           _ReadingCard(
-            title: 'First Reading',
-            reference: 'Genesis 22:1-18',
-            text: 'God tested Abraham and said to him, "Take your son, your only son Isaac, whom you love, and go to the land of Moriah, and offer him there as a burnt offering..."',
+            title: 'Primeira Leitura',
+            reference: 'Génesis 22:1-18',
+            text: 'Deus Put Abraham à prova e disse-lhe: "Toma o teu filho, o teu filho único Isaac, a quem amas, e vai para a terra de Moriah, e oferece-o ali em sacrifício..."',
           ),
           const SizedBox(height: 12),
           
           _ReadingCard(
-            title: 'Responsorial Psalm',
-            reference: 'Psalm 116',
-            text: 'I will walk in the presence of the Lord, in the land of the living.',
+            title: 'Salmo Responsorial',
+            reference: 'Salmo 116',
+            text: 'Andarei na presença do Senhor, na terra dos vivos.',
           ),
           const SizedBox(height: 12),
           
           _ReadingCard(
-            title: 'Gospel',
-            reference: 'Mark 9:2-10',
-            text: 'And a cloud overshadowed them, and a voice came out of the cloud, "This is my beloved Son; listen to him."',
+            title: 'Evangelho',
+            reference: 'Marcos 9:2-10',
+            text: 'E uma nuvem os cobriu, e veio uma voz da nuvem: "Este é o meu Filho amado; escutai-o."',
           ),
         ],
       ),
@@ -152,7 +152,7 @@ class _LectioDivinaTab extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'A slow, prayerful way to read Scripture',
+                    'Uma forma lenta e orante de ler a Escritura',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
@@ -163,26 +163,26 @@ class _LectioDivinaTab extends StatelessWidget {
           
           _LectioStep(
             step: '1',
-            title: 'Lectio (Reading)',
-            description: 'Read the passage slowly. What words or phrases stand out?',
+            title: 'Lectio (Leitura)',
+            description: 'Lê o trecho lentamente. Que palavras ou frases se destacam?',
             color: Colors.blue,
           ),
           _LectioStep(
             step: '2',
-            title: 'Meditatio (Meditation)',
-            description: 'Reflect on what God is saying to you. What does this mean for your life?',
+            title: 'Meditatio (Meditação)',
+            description: 'Reflecte sobre o que Deus te está a dizer. O que isto significa para a tua vida?',
             color: Colors.green,
           ),
           _LectioStep(
             step: '3',
-            title: 'Oratio (Prayer)',
-            description: 'Respond to God in prayer. What is your heart saying?',
+            title: 'Oratio (Oração)',
+            description: 'Responde a Deus em oração. O que diz o teu coração?',
             color: Colors.orange,
           ),
           _LectioStep(
             step: '4',
-            title: 'Contemplatio (Contemplation)',
-            description: 'Rest in God\'s presence. Simply be with Him.',
+            title: 'Contemplatio (Contemplação)',
+            description: 'Repousa na presença de Deus. Simplesmente está com Ele.',
             color: Colors.purple,
           ),
         ],
@@ -243,20 +243,20 @@ class _PrayersTab extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       children: [
         _PrayerCard(
-          title: 'Morning Prayer',
-          text: 'Lord, thank you for this new day. Guide my steps and help me live for you.',
+          title: 'Oração da Manhã',
+          text: 'Senhor, obrigado por este novo dia. Guia os meus passos e ajuda-me a viver para Ti.',
         ),
         _PrayerCard(
-          title: 'Evening Prayer',
-          text: 'Thank you for this day. Forgive my sins and bless my sleep.',
+          title: 'Oração da Noite',
+          text: 'Obrigado por este dia. Perdoa os meus pecados e abençoa o meu sono.',
         ),
         _PrayerCard(
-          title: 'St. Michael Prayer',
-          text: 'St. Michael the Archangel, defend us in battle...',
+          title: 'Oração a São Miguel',
+          text: 'São Miguel Arcanjo, defendei-nos na batalha...',
         ),
         _PrayerCard(
-          title: 'Hail Mary',
-          text: 'Hail Mary, full of grace, the Lord is with thee...',
+          title: 'Ave Maria',
+          text: 'Ave Maria, cheia de graça, o Connosco está...',
         ),
       ],
     );

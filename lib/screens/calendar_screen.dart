@@ -5,24 +5,22 @@ class CalendarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Generate demo data - 30 days
     final days = List.generate(30, (i) {
       final day = i + 1;
       return _DayData(
         day: day,
-        completed: (i * 3) % 7 == 0, // Random-ish completion
+        completed: (i * 3) % 7 == 0,
         streak: (i % 10) < 5,
       );
     });
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Calendar'),
+        title: const Text('Calendário'),
         centerTitle: true,
       ),
       body: Column(
         children: [
-          // Month selector
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -33,7 +31,7 @@ class CalendarScreen extends StatelessWidget {
                   onPressed: () {},
                 ),
                 Text(
-                  'February 2026',
+                  'Fevereiro 2026',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 IconButton(
@@ -44,26 +42,25 @@ class CalendarScreen extends StatelessWidget {
             ),
           ),
           
-          // Stats row
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _StatCard(
-                  title: 'Current Streak',
+                  title: 'Sequência Atual',
                   value: '7',
                   icon: Icons.local_fire_department,
                   color: Colors.orange,
                 ),
                 _StatCard(
-                  title: 'Best Streak',
+                  title: 'Melhor Sequência',
                   value: '21',
                   icon: Icons.emoji_events,
                   color: Colors.amber,
                 ),
                 _StatCard(
-                  title: 'This Month',
+                  title: 'Este Mês',
                   value: '85%',
                   icon: Icons.check_circle,
                   color: Colors.green,
@@ -73,7 +70,6 @@ class CalendarScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           
-          // Calendar grid
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16),

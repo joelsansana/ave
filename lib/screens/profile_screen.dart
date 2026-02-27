@@ -7,14 +7,13 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('Perfil'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // Profile header
             const CircleAvatar(
               radius: 50,
               child: Icon(Icons.person, size: 50),
@@ -25,47 +24,45 @@ class ProfileScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             Text(
-              'Member since Feb 2026',
+              'Membro desde Fevereiro 2026',
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 24),
 
-            // Stats cards
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _ProfileStat(label: 'Habits', value: '6'),
-                _ProfileStat(label: 'Day Streak', value: '7'),
-                _ProfileStat(label: 'Total Days', value: '45'),
+                _ProfileStat(label: 'Hábitos', value: '6'),
+                _ProfileStat(label: 'Dias Seguidos', value: '7'),
+                _ProfileStat(label: 'Total Dias', value: '45'),
               ],
             ),
             const SizedBox(height: 32),
 
-            // Menu items
             _MenuItem(
               icon: Icons.notifications,
-              title: 'Notifications',
+              title: 'Notificações',
               onTap: () {},
             ),
             _MenuItem(
               icon: Icons.star,
-              title: 'Subscription',
-              subtitle: 'Free Plan',
+              title: 'Subscrição',
+              subtitle: 'Plano Gratuito',
               onTap: () {},
             ),
             _MenuItem(
               icon: Icons.family_restroom,
-              title: 'Family',
+              title: 'Família',
               onTap: () {},
             ),
             _MenuItem(
               icon: Icons.help,
-              title: 'Help & Support',
+              title: 'Ajuda e Suporte',
               onTap: () {},
             ),
             _MenuItem(
               icon: Icons.info,
-              title: 'About',
+              title: 'Sobre',
               onTap: () {},
             ),
           ],

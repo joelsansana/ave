@@ -5,49 +5,46 @@ class HabitService {
     return const [
       Habit(
         id: 'morning_prayer',
-        name: 'Morning Prayer',
-        description: 'Start your day with God',
-        defaultTime: '7:00 AM',
+        name: 'Oração da Manhã',
+        description: 'Começa o teu dia com Deus',
+        defaultTime: '07:00',
         icon: IconType.sun,
       ),
       Habit(
         id: 'rosary',
-        name: 'Rosary',
-        description: 'Daily rosary prayer',
-        defaultTime: '8:00 PM',
+        name: 'Rosário',
+        description: 'Reza o rosário diário',
+        defaultTime: '20:00',
         icon: IconType.pray,
       ),
       Habit(
         id: 'bible_reading',
-        name: 'Bible Reading',
-        description: 'Read the daily Scripture',
-        defaultTime: '9:00 AM',
+        name: 'Leitura Bíblica',
+        description: 'Lê a Escritura do dia',
+        defaultTime: '09:00',
         icon: IconType.book,
       ),
       Habit(
         id: 'evening_prayer',
-        name: 'Evening Prayer',
-        description: 'End your day with gratitude',
-        defaultTime: '10:00 PM',
+        name: 'Oração da Noite',
+        description: 'Termina o dia com gratidão',
+        defaultTime: '22:00',
         icon: IconType.star,
       ),
       Habit(
         id: 'chaplet',
-        name: 'Divine Mercy Chaplet',
-        description: 'Pray the chaplet at 3 PM',
-        defaultTime: '3:00 PM',
+        name: 'Terço da Misericórdia',
+        description: 'Reza o terço às 15:00',
+        defaultTime: '15:00',
         icon: IconType.heart,
       ),
       Habit(
         id: 'mass',
-        name: 'Weekly Mass',
-        description: 'Attend Sunday Mass',
-        defaultTime: 'Sunday',
+        name: 'Missa Semanal',
+        description: 'Assiste à Missa dominical',
+        defaultTime: 'Domingo',
         icon: IconType.church,
       ),
     ];
   }
-
-  // Future: Load from Firebase
-  // Future: Save streaks
 }
