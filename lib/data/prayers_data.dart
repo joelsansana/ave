@@ -140,9 +140,9 @@ class PrayersData {
         'meditation': 'Nesta quarta estação contemplemos N. S. J. C., rodeado de seus inimigos e todo pisado e ensanguentado. Encontra sua Mãe, que num impulso de amor e dor corre para Ele através da multidão, que cruelmente O escarnece e se regozija com o sofrimento daquela terna Mãe e do seu carinhoso Filho!... Jesus e Maria, assisti-nos na última agonia.',
       },
       {
-        ',
-        'titlestation': 5': 'Simão ajuda Jesus a levar a Cruz',
-        'meditation': 'Nesta quinta estação contemplemos N. S. J. C., vergado sob o peso da Cruz e atormentado com as dores da grande chaga que ela abriu em seu ombro. Mal se mexem; já não pode caminar; e os algozes, temendo que morra antes de ser crucificado, intimam Simão Cireneu a que O ajude!... Ó misericordiosíssimo Jesus, ajudai-nos a levar a cruz, que for da vossa vontade enviar-nos.',
+        'station': 5,
+        'title': 'Simão ajuda Jesus a levar a Cruz',
+        'meditation': 'Nesta quinta estação contemplemos N. S. J. C., vergado sob o peso da Cruz e atormentado com as dores da grande chaga que ela abriu em seu ombro. Mal se mexem; já não pode caminar; e os algozes, temendo que morra antes de ser crucificado, intimam Simão Cireneu a que O ajude!...',
       },
       {
         'station': 6,
@@ -193,7 +193,7 @@ class PrayersData {
   };
 
   // ORAÇÕES DO DIA
-  static List<Map<String, String>> get OraçõesDiárias => [
+  static List<Map<String, String>> get oracoesDiarias => [
     {
       'title': 'Oração da Manhã',
       'text': 'Senhor, obrigado por este novo dia. Guia os meus passos e ajuda-me a viver para Ti. Que este dia seja dedicado à Tua glória e ao serviço do próximo. Amén.',

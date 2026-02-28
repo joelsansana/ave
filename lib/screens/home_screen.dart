@@ -153,7 +153,9 @@ class _SaintCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               '"${saint.quote}"',
-              style: Theme.of(context).textTheme.bodyMedium?.italic,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontStyle: FontStyle.italic,
+              ),
             ),
           ],
         ),

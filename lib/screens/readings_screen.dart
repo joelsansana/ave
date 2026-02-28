@@ -321,7 +321,7 @@ class _PrayersTab extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final prayers = PrayersData.OraçõesDiárias;
+    final prayers = PrayersData.oracoesDiarias;
     
     return ListView.builder(
       padding: const EdgeInsets.all(16),

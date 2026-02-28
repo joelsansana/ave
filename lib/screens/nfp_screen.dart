@@ -42,7 +42,7 @@ class _NFPScreenState extends State<NFPScreen> with SingleTickerProviderStateMix
 
     return Scaffold(
       appBar: AppBar(
-        title: constText('Ciclo'),
+        title: Text('Ciclo'),
         centerTitle: true,
         bottom: TabBar(
           controller: _tabController,
@@ -153,8 +153,8 @@ class _TodayTab extends StatelessWidget {
 
           // Period
           SwitchListTile(
-            title: constText('Período'),
-            subtitle: constText('Primeiro dia do período?'),
+            title: Text('Período'),
+            subtitle: Text('Primeiro dia do período?'),
             value: isPeriodDay,
             onChanged: onPeriodChanged,
           ),
@@ -167,7 +167,7 @@ class _TodayTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  constText('Temperatura Basal'),
+                  Text('Temperatura Basal'),
                   const SizedBox(height: 8),
                   Row(
                     children: [
@@ -197,7 +197,7 @@ class _TodayTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  constText('Muco Cervical'),
+                  Text('Muco Cervical'),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
@@ -224,7 +224,7 @@ class _TodayTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  constText('Humor'),
+                  Text('Humor'),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
@@ -251,7 +251,7 @@ class _TodayTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  constText('Sintomas'),
+                  Text('Sintomas'),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
@@ -381,13 +381,13 @@ class _PredictionsCard extends StatelessWidget {
             if (stats.predictedOvulation != null)
               ListTile(
                 leading: const Icon(Icons.egg, color: Colors.green),
-                title: constText('Ovulação prevista'),
+                title: Text('Ovulação prevista'),
                 subtitle: Text('${stats.predictedOvulation!.day}/${stats.predictedOvulation!.month}'),
               ),
             if (stats.predictedNextPeriod != null)
               ListTile(
                 leading: const Icon(Icons.event, color: Colors.red),
-                title: constText('Próximo período'),
+                title: Text('Próximo período'),
                 subtitle: Text('${stats.predictedNextPeriod!.day}/${stats.predictedNextPeriod!.month}'),
               ),
           ],
@@ -435,8 +435,8 @@ class _HistoryTab extends StatelessWidget {
         Card(
           child: ListTile(
             leading: const Icon(Icons.history),
-            title: constText('Ciclos Anteriores'),
-            subtitle: constText('Em desenvolvimento...'),
+            title: Text('Ciclos Anteriores'),
+            subtitle: Text('Em desenvolvimento...'),
           ),
         ),
       ],
