@@ -210,13 +210,34 @@ class _RosarioTab extends StatelessWidget {
     );
   }
 
+  String _getPrayerContent(String prayer) {
+    switch (prayer) {
+      case 'Sinal da Cruz':
+        return '✠ Em nome do Pai e do Filho e do Espírito Santo.\n\n℟. Amen.';
+      case 'Credo':
+        return 'Creio em Deus, Pai todo-poderoso, Criador do Céu e da Terra;\ne em Jesus Cristo, seu único Filho, Nosso Senhor,\nque foi concebido pelo poder do Espírito Santo;\nnasceu da Virgem Maria;\npadeceu sob Pôncio Pilatos,\nfoi crucificado, morto e sepultado;\ndesceu à mansão dos mortos;\nressuscitou ao terceiro dia;\nsubiu aos Céus, onde está sentado à direita de Deus Pai todo-poderoso,\nde onde há-de vir a julgar os vivos e os mortos.\nCreio no Espírito Santo,\nna santa Igreja Católica,\nna comunhão dos Santos,\nna remissão dos pecados,\nna ressurreição da carne,\nna vida eterna. Amen.';
+      case 'Pai Nosso':
+        return 'Pai Nosso, que estais nos céus,\nsantificado seja o Vosso Nome,\nvenha a nós o Vosso Reino;\nseja feita a Vossa vontade assim na terra como no Céu.\n\nO pão nosso de cada dia nos dai hoje;\nperdoai-nos as nossas dívidas,\nassim como nós perdoamos aos nossos devedores;\ne não nos deixeis cair em tentação;\nmas livrai-nos do mal. Amen.';
+      case 'Ave Maria':
+        return 'Ave Maria, cheia de graça,\no Senhor é convosco.\nBendita sois vós entre as mulheres\ne bendito é o fruto do vosso ventre, Jesus.\n\nSanta Maria, Mãe de Deus,\nrogai por nós, pecadores,\nagora e na hora da nossa morte.\nAmén.';
+      case 'Glória':
+        return 'Glória ao Pai, e ao Filho e ao Espírito Santo.\nAssim como era no princípio, agora e sempre,\ne por todos os séculos dos séculos.\nAmen.';
+      case 'Salve Rainha':
+        return 'Salvé, Rainha, mãe de misericórdia,\nvida, doçura, esperança nossa, salve!\nA Vós bradamos, os degredados filhos de Eva.\nA Vós suspiramos, gemendo e chorando neste vale de lágrimas.\n\nEia, pois, advogada nossa,\nesses Vossos olhos misericordiosos a nós volvei.\nE, depois deste desterro, nos mostrai Jesus,\nbendito fruto do Vosso ventre.\n\nÓ clemente, ó piedosa, ó doce Virgem Maria!';
+      case 'Oferecimento':
+        return 'Santíssima Virgem, Mãe de Deus,\neu Vos ofereço este rosário em desagravo\ndo Santíssimo Coração de Nosso Senhor Jesus Cristo,\nVosso Filho,\ne em desagrado do Vosso Coração Imaculado;\npelas intenções que Vos apresento.\n\nSantíssima Virgem, rogai por nós.';
+      default:
+        return '';
+    }
+  }
+
   void _showPrayerDialog(BuildContext context, String prayer) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(prayer),
         content: SingleChildScrollView(
-          child: Text(AppLocalizations.of(context)!.readingsRosaryContent),
+          child: Text(_getPrayerContent(prayer)),
         ),
         actions: [
           TextButton(
