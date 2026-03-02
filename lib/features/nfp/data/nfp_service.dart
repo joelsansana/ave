@@ -1,4 +1,4 @@
-import '../models/nfp_data.dart';
+import '../domain/nfp_data.dart';
 
 class NFPService {
   // Default values (can be customized per user)

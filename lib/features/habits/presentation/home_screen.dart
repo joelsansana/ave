@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import '../models/habit.dart';
-import '../models/saint.dart';
-import '../services/habit_service.dart';
-import '../services/saint_service.dart';
+import 'package:habitos/l10n/app_localizations.dart';
+import '../domain/habit.dart';
+import '../../readings/domain/saint.dart';
+import '../data/habit_service.dart';
+import '../../readings/data/saint_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'habit_providers.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final List<Habit> _habits = HabitService.getDefaultHabits();
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   Saint? _saintOfDay;
 
   @override
@@ -32,10 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final today = DateTime.now();
     final liturgicalSeason = _getLiturgicalSeason(today);
+    final habits = ref.watch(habitsProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hábitos'),
+        title: Text(AppLocalizations.of(context)!.habitsTitle),
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       ),
@@ -61,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 8),
-            ..._habits.map((habit) => _HabitTile(habit: habit)),
+            ...habits.map((habit) => _HabitTile(habit: habit)),
           ],
         ),
       ),
@@ -187,38 +190,33 @@ class _LoadingCard extends StatelessWidget {
   }
 }
 
-class _HabitTile extends StatefulWidget {
+class _HabitTile extends ConsumerWidget {
   final Habit habit;
 
   const _HabitTile({required this.habit});
 
   @override
-  State<_HabitTile> createState() => _HabitTileState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final today = DateTime.now();
+    final isCompleted = habit.completedDates.any((d) => 
+      d.year == today.year && d.month == today.month && d.day == today.day);
 
-class _HabitTileState extends State<_HabitTile> {
-  bool _completed = false;
-
-  @override
-  Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: Checkbox(
-          value: _completed,
+          value: isCompleted,
           onChanged: (value) {
-            setState(() {
-              _completed = value ?? false;
-            });
+            ref.read(habitsProvider.notifier).toggleHabitCompletion(habit.id, today);
           },
         ),
         title: Text(
-          widget.habit.name,
+          habit.name,
           style: TextStyle(
-            decoration: _completed ? TextDecoration.lineThrough : null,
+            decoration: isCompleted ? TextDecoration.lineThrough : null,
           ),
         ),
-        subtitle: Text(widget.habit.defaultTime),
+        subtitle: Text(habit.defaultTime),
         trailing: IconButton(
           icon: const Icon(Icons.notifications_outlined),
           onPressed: () {

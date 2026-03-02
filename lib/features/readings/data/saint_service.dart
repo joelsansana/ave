@@ -1,4 +1,4 @@
-import '../models/saint.dart';
+import '../domain/saint.dart';
 
 class SaintService {
   // Portuguese saints data

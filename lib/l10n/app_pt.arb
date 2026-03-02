@@ -1,0 +1,51 @@
+{
+  "appTitle": "Hábitos",
+  "@appTitle": {
+    "description": "O título principal da aplicação"
+  },
+  "homeTab": "Início",
+  "calendarTab": "Calendário",
+  "readingsTab": "Ler",
+  "nfpTab": "PNF",
+  "profileTab": "Perfil",
+  
+  "habitsTitle": "Hábitos",
+  "calendarTitle": "Calendário",
+  "profileTitle": "Perfil",
+  "readingsTitle": "Ler",
+
+  "nfpCycleTab": "Ciclo",
+  "nfpPeriod": "Período",
+  "nfpFirstDayOfPeriod": "Primeiro dia do período?",
+  "nfpBasalTemp": "Temperatura Basal",
+  "nfpCervicalMucus": "Muco Cervical",
+  "nfpMood": "Humor",
+  "nfpSymptoms": "Sintomas",
+  "nfpPredictedOvulation": "Ovulação prevista",
+  "nfpNextPeriod": "Próximo período",
+  "nfpPreviousCycles": "Ciclos Anteriores",
+  "nfpInDevelopment": "Em desenvolvimento...",
+  
+  "readingsRosaryContent": "Conteúdo completo do Rosário...\n\n(em desenvolvimento)",
+  "close": "Fechar",
+  "readingsStationX": "Estação {stationNumber}",
+  "@readingsStationX": {
+    "placeholders": {
+      "stationNumber": {
+        "type": "String",
+        "example": "1"
+      }
+    }
+  },
+  "readingsTapToMeditate": "Tap para meditar",
+  
+  "loading": "A carregar...",
+  "error": "Ocorreu um erro.",
+  "save": "Guardar",
+  "cancel": "Cancelar",
+  "today": "Hoje",
+  "add": "Adicionar",
+  "profileHabitsCount": "Hábitos",
+  "profileStreakDays": "Dias Seguidos",
+  "profileTotalDays": "Total Dias"
+}

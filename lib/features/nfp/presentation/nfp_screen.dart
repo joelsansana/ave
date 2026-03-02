@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
-import '../models/nfp_data.dart';
-import '../services/nfp_service.dart';
+import 'package:habitos/l10n/app_localizations.dart';
+import '../domain/nfp_data.dart';
+import '../data/nfp_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'nfp_providers.dart';
 
-class NFPScreen extends StatefulWidget {
+class NFPScreen extends ConsumerStatefulWidget {
   const NFPScreen({super.key});
 
   @override
-  State<NFPScreen> createState() => _NFPScreenState();
+  ConsumerState<NFPScreen> createState() => _NFPScreenState();
 }
 
-class _NFPScreenState extends State<NFPScreen> with SingleTickerProviderStateMixin {
+class _NFPScreenState extends ConsumerState<NFPScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  
-  // Demo data
-  DateTime _lastPeriodStart = DateTime.now().subtract(const Duration(days: 14));
-  bool _isPeriodDay = false;
-  double? _temperature;
-  MucusType? _mucusType;
-  Mood? _mood;
-  final List<Symptom> _symptoms = [];
   
   @override
   void initState() {
@@ -35,14 +30,51 @@ class _NFPScreenState extends State<NFPScreen> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     final today = DateTime.now();
-    final cycleDay = NFPService.getCycleDay(today, _lastPeriodStart);
-    final phase = NFPService.getPhase(cycleDay, 28);
-    final fertilityStatus = NFPService.getFertilityStatus(cycleDay, 28);
-    final stats = NFPService.calculateStats([]);
+    final cycleDays = ref.watch(nfpProvider);
+    final stats = NFPService.calculateStats(cycleDays);
+    
+    final cycleDay = stats.lastPeriodStart != null 
+        ? NFPService.getCycleDay(today, stats.lastPeriodStart!) 
+        : 1;
+    final phase = NFPService.getPhase(cycleDay, stats.averageCycleLength);
+    final fertilityStatus = NFPService.getFertilityStatus(cycleDay, stats.averageCycleLength);
+    
+    final todayData = cycleDays.where((d) => 
+        d.date.year == today.year && 
+        d.date.month == today.month && 
+        d.date.day == today.day).firstOrNull;
+
+    void updateDayData({
+      bool? isPeriodDay,
+      double? temperature,
+      bool clearTemperature = false,
+      MucusType? mucusType,
+      bool clearMucus = false,
+      Mood? mood,
+      bool clearMood = false,
+      List<Symptom>? symptoms,
+    }) {
+      final currentDay = todayData ?? CycleDay(
+        id: today.toIso8601String(),
+        date: today,
+        dayOfCycle: cycleDay,
+        phase: phase,
+      );
+      
+      final updatedDay = currentDay.copyWith(
+        isPeriodDay: isPeriodDay ?? currentDay.isPeriodDay,
+        temperature: clearTemperature ? null : (temperature ?? currentDay.temperature),
+        mucusType: clearMucus ? null : (mucusType ?? currentDay.mucusType),
+        mood: clearMood ? null : (mood ?? currentDay.mood),
+        symptoms: symptoms ?? currentDay.symptoms,
+      );
+      
+      ref.read(nfpProvider.notifier).updateDay(updatedDay);
+    }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ciclo'),
+        title: Text(AppLocalizations.of(context)!.nfpCycleTab),
         centerTitle: true,
         bottom: TabBar(
           controller: _tabController,
@@ -61,24 +93,24 @@ class _NFPScreenState extends State<NFPScreen> with SingleTickerProviderStateMix
             phase: phase,
             fertilityStatus: fertilityStatus,
             stats: stats,
-            lastPeriodStart: _lastPeriodStart,
-            isPeriodDay: _isPeriodDay,
-            temperature: _temperature,
-            mucusType: _mucusType,
-            mood: _mood,
-            symptoms: _symptoms,
-            onPeriodChanged: (value) => setState(() => _isPeriodDay = value),
-            onTemperatureChanged: (value) => setState(() => _temperature = value),
-            onMucusChanged: (value) => setState(() => _mucusType = value),
-            onMoodChanged: (value) => setState(() => _mood = value),
+            lastPeriodStart: stats.lastPeriodStart ?? today,
+            isPeriodDay: todayData?.isPeriodDay ?? false,
+            temperature: todayData?.temperature,
+            mucusType: todayData?.mucusType,
+            mood: todayData?.mood,
+            symptoms: todayData?.symptoms ?? [],
+            onPeriodChanged: (value) => updateDayData(isPeriodDay: value),
+            onTemperatureChanged: (value) => updateDayData(temperature: value),
+            onMucusChanged: (value) => updateDayData(mucusType: value, clearMucus: value == null),
+            onMoodChanged: (value) => updateDayData(mood: value, clearMood: value == null),
             onSymptomToggle: (symptom) {
-              setState(() {
-                if (_symptoms.contains(symptom)) {
-                  _symptoms.remove(symptom);
-                } else {
-                  _symptoms.add(symptom);
-                }
-              });
+              final currentSymptoms = List<Symptom>.from(todayData?.symptoms ?? []);
+              if (currentSymptoms.contains(symptom)) {
+                currentSymptoms.remove(symptom);
+              } else {
+                currentSymptoms.add(symptom);
+              }
+              updateDayData(symptoms: currentSymptoms);
             },
           ),
           _ChartTab(cycleDay: cycleDay),
@@ -153,8 +185,8 @@ class _TodayTab extends StatelessWidget {
 
           // Period
           SwitchListTile(
-            title: Text('Período'),
-            subtitle: Text('Primeiro dia do período?'),
+            title: Text(AppLocalizations.of(context)!.nfpPeriod),
+            subtitle: Text(AppLocalizations.of(context)!.nfpFirstDayOfPeriod),
             value: isPeriodDay,
             onChanged: onPeriodChanged,
           ),
@@ -167,7 +199,7 @@ class _TodayTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Temperatura Basal'),
+                  Text(AppLocalizations.of(context)!.nfpBasalTemp),
                   const SizedBox(height: 8),
                   Row(
                     children: [
@@ -197,7 +229,7 @@ class _TodayTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Muco Cervical'),
+                  Text(AppLocalizations.of(context)!.nfpCervicalMucus),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
@@ -224,7 +256,7 @@ class _TodayTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Humor'),
+                  Text(AppLocalizations.of(context)!.nfpMood),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
@@ -251,7 +283,7 @@ class _TodayTab extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Sintomas'),
+                  Text(AppLocalizations.of(context)!.nfpSymptoms),
                   const SizedBox(height: 8),
                   Wrap(
                     spacing: 8,
@@ -381,13 +413,13 @@ class _PredictionsCard extends StatelessWidget {
             if (stats.predictedOvulation != null)
               ListTile(
                 leading: const Icon(Icons.egg, color: Colors.green),
-                title: Text('Ovulação prevista'),
+                title: Text(AppLocalizations.of(context)!.nfpPredictedOvulation),
                 subtitle: Text('${stats.predictedOvulation!.day}/${stats.predictedOvulation!.month}'),
               ),
             if (stats.predictedNextPeriod != null)
               ListTile(
                 leading: const Icon(Icons.event, color: Colors.red),
-                title: Text('Próximo período'),
+                title: Text(AppLocalizations.of(context)!.nfpNextPeriod),
                 subtitle: Text('${stats.predictedNextPeriod!.day}/${stats.predictedNextPeriod!.month}'),
               ),
           ],
@@ -435,8 +467,8 @@ class _HistoryTab extends StatelessWidget {
         Card(
           child: ListTile(
             leading: const Icon(Icons.history),
-            title: Text('Ciclos Anteriores'),
-            subtitle: Text('Em desenvolvimento...'),
+            title: Text(AppLocalizations.of(context)!.nfpPreviousCycles),
+            subtitle: Text(AppLocalizations.of(context)!.nfpInDevelopment),
           ),
         ),
       ],

@@ -10,6 +10,11 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
+  flutter_riverpod: ^2.5.1
+  shared_preferences: ^2.2.2
+  intl: ^0.20.2
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -18,3 +23,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true

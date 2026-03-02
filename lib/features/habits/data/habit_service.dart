@@ -1,4 +1,4 @@
-import '../models/habit.dart';
+import '../domain/habit.dart';
 
 class HabitService {
   static List<Habit> getDefaultHabits() {

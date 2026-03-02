@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habitos/l10n/app_localizations.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -7,7 +8,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Perfil'),
+        title: Text(AppLocalizations.of(context)!.profileTitle),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -32,9 +33,9 @@ class ProfileScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _ProfileStat(label: 'Hábitos', value: '6'),
-                _ProfileStat(label: 'Dias Seguidos', value: '7'),
-                _ProfileStat(label: 'Total Dias', value: '45'),
+                _ProfileStat(label: AppLocalizations.of(context)!.profileHabitsCount, value: '6'),
+                _ProfileStat(label: AppLocalizations.of(context)!.profileStreakDays, value: '7'),
+                _ProfileStat(label: AppLocalizations.of(context)!.profileTotalDays, value: '45'),
               ],
             ),
             const SizedBox(height: 32),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habitos/l10n/app_localizations.dart';
 import '../data/prayers_data.dart';
 
 class ReadingsScreen extends StatefulWidget {
@@ -28,7 +29,7 @@ class _ReadingsScreenState extends State<ReadingsScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ler'),
+        title: Text(AppLocalizations.of(context)!.readingsTitle),
         centerTitle: true,
         bottom: TabBar(
           controller: _tabController,
@@ -214,13 +215,13 @@ class _RosarioTab extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(prayer),
-        content: const SingleChildScrollView(
-          child: Text('Conteúdo completo do Rosário...\n\n(em desenvolvimento)'),
+        content: SingleChildScrollView(
+          child: Text(AppLocalizations.of(context)!.readingsRosaryContent),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Fechar'),
+            child: Text(AppLocalizations.of(context)!.close),
           ),
         ],
       ),
@@ -303,8 +304,8 @@ class _ViaSacraTab extends StatelessWidget {
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
-                title: Text('Estação ${index + 1}'),
-                subtitle: const Text('Tap para meditar'),
+                title: Text(AppLocalizations.of(context)!.readingsStationX((index + 1).toString())),
+                subtitle: Text(AppLocalizations.of(context)!.readingsTapToMeditate),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {},
               ),

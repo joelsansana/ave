@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
-import 'screens/calendar_screen.dart';
-import 'screens/readings_screen.dart';
-import 'screens/profile_screen.dart';
-import 'screens/nfp_screen.dart';
+import 'features/habits/presentation/home_screen.dart';
+import 'features/calendar/presentation/calendar_screen.dart';
+import 'features/readings/presentation/readings_screen.dart';
+import 'features/profile/presentation/profile_screen.dart';
+import 'features/nfp/presentation/nfp_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'features/habits/presentation/habit_providers.dart';
 
-void main() {
-  runApp(const CatholicHabitsApp());
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'l10n/app_localizations.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+
+  runApp(
+    ProviderScope(
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(prefs),
+      ],
+      child: const CatholicHabitsApp(),
+    ),
+  );
 }
 
 class CatholicHabitsApp extends StatelessWidget {
@@ -16,6 +32,15 @@ class CatholicHabitsApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Hábitos',
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('pt', ''), // Portuguese
+      ],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -66,31 +91,31 @@ class _MainNavigationState extends State<MainNavigation> {
             _selectedIndex = index;
           });
         },
-        destinations: const [
+        destinations: [
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home),
-            label: 'Início',
+            label: AppLocalizations.of(context)!.homeTab,
           ),
           NavigationDestination(
             icon: Icon(Icons.calendar_month_outlined),
             selectedIcon: Icon(Icons.calendar_month),
-            label: 'Calendário',
+            label: AppLocalizations.of(context)!.calendarTab,
           ),
           NavigationDestination(
             icon: Icon(Icons.book_outlined),
             selectedIcon: Icon(Icons.book),
-            label: 'Ler',
+            label: AppLocalizations.of(context)!.readingsTab,
           ),
           NavigationDestination(
             icon: Icon(Icons.favorite_outline),
             selectedIcon: Icon(Icons.favorite),
-            label: 'Ciclo',
+            label: AppLocalizations.of(context)!.nfpTab,
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outlined),
             selectedIcon: Icon(Icons.person),
-            label: 'Perfil',
+            label: AppLocalizations.of(context)!.profileTab,
           ),
         ],
       ),

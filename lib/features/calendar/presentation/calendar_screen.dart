@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habitos/l10n/app_localizations.dart';
 
 class CalendarScreen extends StatelessWidget {
   const CalendarScreen({super.key});
@@ -16,7 +17,7 @@ class CalendarScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Calendário'),
+        title: Text(AppLocalizations.of(context)!.calendarTitle),
         centerTitle: true,
       ),
       body: Column(
