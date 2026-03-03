@@ -199,6 +199,10 @@ class PrayersData {
       'text': 'Senhor, obrigado por este novo dia. Guia os meus passos e ajuda-me a viver para Ti. Que este dia seja dedicado à Tua glória e ao serviço do próximo. Amén.',
     },
     {
+      'title': 'Oração pela Paz (Cardeal Newman)',
+      'text': 'Deus Eterno, cujo reino perfeito não tem espada senão a da justiça, não tem força conhecida senão a do amor: Expande powerfulmente o teu Espírito, para que todos os povos possam ser reunidas sob a bandeira do Príncipe da Paz, como filhos de um único Deus; a Quem pertencem o domínio e a glória, agora e para sempre. Amém.',
+    },
+    {
       'title': 'Oração da Noite',
       'text': 'Obrigado por este dia, Senhor. Perdoa os meus pecados e abençoa o meu sono. Protege-me durante a noite e guarda-me no teu amor. Amén.',
     },
