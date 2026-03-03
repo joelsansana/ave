@@ -203,6 +203,10 @@ class PrayersData {
       'text': 'Deus Eterno, cujo reino perfeito não tem espada senão a da justiça, não tem força conhecida senão a do amor: Expande powerfulmente o teu Espírito, para que todos os povos possam ser reunidas sob a bandeira do Príncipe da Paz, como filhos de um único Deus; a Quem pertencem o domínio e a glória, agora e para sempre. Amém.',
     },
     {
+      'title': 'Suscipe (Santo Inácio de Loyola)',
+      'text': 'Tomai, Senhor, e recebei, toda a minha liberdade, a minha memória, o meu entendimento e toda a minha vontade. Tudo quanto tenho e possuo de Vós o recebi. Por isso a Vós, Senhor, o entrego e restituo para que disponhais de tudo segundo a vossa vontade. Concedei-me somente o vosso amor e a vossa graça, que isto me basta, e não desejo outra coisa da vossa misericórdia infinita. Ámen.',
+    },
+    {
       'title': 'Oração da Noite',
       'text': 'Obrigado por este dia, Senhor. Perdoa os meus pecados e abençoa o meu sono. Protege-me durante a noite e guarda-me no teu amor. Amén.',
     },
