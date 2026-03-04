@@ -5,14 +5,14 @@
   },
   "homeTab": "Início",
   "calendarTab": "Calendário",
-  "readingsTab": "Ler",
+  "readingsTab": "Devocional",
   "nfpTab": "PNF",
   "profileTab": "Perfil",
   
   "habitsTitle": "Hábitos",
   "calendarTitle": "Calendário",
   "profileTitle": "Perfil",
-  "readingsTitle": "Ler",
+  "readingsTitle": "Devocional",
 
   "nfpCycleTab": "Ciclo",
   "nfpPeriod": "Período",

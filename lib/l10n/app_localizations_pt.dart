@@ -18,7 +18,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get calendarTab => 'Calendário';
 
   @override
-  String get readingsTab => 'Ler';
+  String get readingsTab => 'Devocional';
 
   @override
   String get nfpTab => 'PNF';
@@ -36,7 +36,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get profileTitle => 'Perfil';
 
   @override
-  String get readingsTitle => 'Ler';
+  String get readingsTitle => 'Devocional';
 
   @override
   String get nfpCycleTab => 'Ciclo';
