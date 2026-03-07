@@ -222,5 +222,97 @@ class PrayersData {
       'title': 'Em preparação para a confissão',
       'text': 'Senhor Jesus Cristo, Redentor do mundo, Vós que, pela vossa morte e ressurreição, reconciliastes a humanidade com o Pai, olhai para nós, pecadores, e concedei-nos a graça duma contrição perfeita. Fazei que Vos amemos de todo o nosso coração. Amén.',
     },
+    {
+      'title': 'Anjo da Guarda',
+      'text': 'Santo Anjo do Senhor, meu protector e guia divino, eu vos adoro e amo. Guardai-me sempre em todos os caminhos da minha vida. Amén.',
+    },
+    {
+      'title': 'Corrente ao Santíssimo Sacramento',
+      'text': 'Adoro-Vos, ó meu Deus, Santíssimo Sacramento. Creio que estais realmente presente. Amo-Vos sobre todas as coisas e desejo receber-Vos. Tende piedade de mim. Amén.',
+    },
+    {
+      'title': 'Oração à Divina Misericórdia',
+      'text': 'Ó Sangue e Água que jorrastes do Coração de Jesus como fonte de misericórdia para nós, eu confio em Vós.',
+    },
+    {
+      'title': 'Santo Sudário',
+      'text': 'Rosto Sagrada de Jesus, que demonstrastes a Deus Pai a vossa submissão à sua vontade, ensinai-me a aceitar a minha cruz diária com paciência e amor.',
+    },
+    {
+      'title': 'Oração de São Bento',
+      'text': 'Crux sacra sit mihi lux. Nunquam draco sit mihi dux. (Seja a santa cruz a minha luz. Nunca o dragão seja meu guia.)',
+    },
+    {
+      'title': 'Protector dos Cristãos',
+      'text': 'Sob a vossa proteição nos pomos, Santa Mãe de Deus. Não desprezeis as nossas súplicas e livrai-nos de todo o perigo.',
+    },
+    {
+      'title': 'Súplica a Nossa Senhora de Fátima',
+      'text': 'Ó Senhora do Rosário de Fátima, guardai-nos, protegei-nos e illuminai os nossos caminhos. Conservai a paz no mundo. Amén.',
+    },
+    {
+      'title': 'Agradecimento',
+      'text': 'Obrigado, meu Deus, por todos os benefícios que me concedestes. Ensinei-me a ser grato em todas as circunstâncias da vida. Amén.',
+    },
   ];
+
+  // LADAINHAS (LITANIES)
+  static Map<String, dynamic> get Ladainhas => {
+    'title': 'Ladainhas',
+    'litanies': [
+      {
+        'title': 'Ladainha de Nossa Senhora',
+        'lines': [
+          'Senhor, tende piedade de nós.',
+          'Cristo, tende piedade de nós.',
+          'Senhor, tende piedade de nós.',
+          'Cristo, ouvi-nos.',
+          'Cristo, atendei-nos.',
+          '',
+          'Pai Celeste, que sois Deus,',
+          'Filho Redentor do mundo, que sois Deus,',
+          'Espírito Santo, que sois Deus,',
+          'Santíssima Trindade, que sois um só Deus,',
+          '',
+          'Santa Maria, rogai por nós.',
+          'Santa Mãe de Deus, rogai por nós.',
+          'Santa Virgem das virgens, rogai por nós.',
+          'Mãe de Cristo, rogai por nós.',
+          'Mãe da Igreja, rogai por nós.',
+          'Mãe da Misericórdia, rogai por nós.',
+          'Rosa Mística, rogai por nós.',
+          'Torre de marfim, rogai por nós.',
+          'Casa de ouro, rogai por nós.',
+          'Arca da Aliança, rogai por nós.',
+          'Janela do céu, rogai por nós.',
+          'Estrela da Manhã, rogai por nós.',
+          'Salus infirmorum, rogai por nós.',
+          'Refúgio dos pecadores, rogai por nós.',
+          'Consoladora dos aflitos, rogai por nós.',
+          '',
+          'Coração Imaculado de Maria,',
+          'rogai por nós.',
+        ],
+      },
+      {
+        'title': 'Ladainha do Santíssimo Nome de Maria',
+        'lines': [
+          'Santa Maria, rogai por nós.',
+          'Santa Mãe de Deus, rogai por nós.',
+          'Estrela do Mar, rogai por nós.',
+          'Rosa mística, rogai por nós.',
+          'Torre de David, rogai por nós.',
+          'Torre de marfim, rogai por nós.',
+          'Casa de ouro, rogai por nós.',
+          'Arca da Aliança, rogai por nós.',
+          'Porta do Céu, rogai por nós.',
+          'Aurora do dia, rogai por nós.',
+          'Saúde dos enfermos, rogai por nós.',
+          'Refúgio dos pecadores, rogai por nós.',
+          'Consoladora dos aflitos, rogai por nós.',
+          'Advogada dos cristão, rogai por nós.',
+        ],
+      },
+    ],
+  };
 }

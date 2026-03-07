@@ -115,7 +115,7 @@ abstract class AppLocalizations {
   /// No description provided for @readingsTab.
   ///
   /// In pt, this message translates to:
-  /// **'Ler'**
+  /// **'Devocional'**
   String get readingsTab;
 
   /// No description provided for @nfpTab.
@@ -151,7 +151,7 @@ abstract class AppLocalizations {
   /// No description provided for @readingsTitle.
   ///
   /// In pt, this message translates to:
-  /// **'Ler'**
+  /// **'Devocional'**
   String get readingsTitle;
 
   /// No description provided for @nfpCycleTab.
