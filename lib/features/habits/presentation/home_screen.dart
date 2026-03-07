@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:habitos/l10n/app_localizations.dart';
 import '../domain/habit.dart';
 import '../../readings/domain/saint.dart';
-import '../data/habit_service.dart';
 import '../../readings/data/saint_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'habit_providers.dart';
@@ -48,7 +47,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Liturgical Season Card
-            _LiturgicalCard(season: liturgicalSeason),
+            _LiturgicalCard(
+              season: liturgicalSeason,
+              color: _getLiturgicalColor(liturgicalSeason),
+              colorName: _getLiturgicalColorName(liturgicalSeason),
+            ),
             const SizedBox(height: 16),
 
             // Saint of the Day
@@ -83,12 +86,49 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       return 'Tempo Comum';
     }
   }
+
+  // Liturgical colors based on season
+  Color _getLiturgicalColor(String season) {
+    switch (season) {
+      case 'Advento':
+        return const Color(0xFF6B4E71); // Violet/Purple
+      case 'Quaresma':
+        return const Color(0xFF8B4513); // Brown/Purple
+      case 'Páscoa':
+        return const Color(0xFFFFD700); // Gold/White
+      case 'Tempo Comum':
+        return const Color(0xFF228B22); // Green
+      default:
+        return const Color(0xFF228B22); // Green
+    }
+  }
+
+  String _getLiturgicalColorName(String season) {
+    switch (season) {
+      case 'Advento':
+        return 'Roxo';
+      case 'Quaresma':
+        return 'Roxo/Marrom';
+      case 'Páscoa':
+        return 'Dourado/Branco';
+      case 'Tempo Comum':
+        return 'Verde';
+      default:
+        return 'Verde';
+    }
+  }
 }
 
 class _LiturgicalCard extends StatelessWidget {
   final String season;
+  final Color color;
+  final String colorName;
 
-  const _LiturgicalCard({required this.season});
+  const _LiturgicalCard({
+    required this.season,
+    required this.color,
+    required this.colorName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +137,15 @@ class _LiturgicalCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            const Icon(Icons.church, size: 40),
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.church, size: 24, color: Colors.white),
+            ),
             const SizedBox(width: 16),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,9 +154,25 @@ class _LiturgicalCard extends StatelessWidget {
                   season,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                Text(
-                  'Tempo Litúrgico',
-                  style: Theme.of(context).textTheme.bodySmall,
+                Row(
+                  children: [
+                    Text(
+                      'Tempo Litúrgico',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: color,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        colorName,
+                        style: const TextStyle(color: Colors.white, fontSize: 10),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
