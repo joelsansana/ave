@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "66957835605",
+    "project_id": "habits-app-915f2",
+    "storage_bucket": "habits-app-915f2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66957835605:android:1e10ef9228c6bdda6403dc",
+        "android_client_info": {
+          "package_name": "com.sansana.habits"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRHItRZumZM2dQWIKdHxbCTREdPbMNQzE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
