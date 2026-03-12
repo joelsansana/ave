@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'features/habits/presentation/home_screen.dart';
 import 'features/calendar/presentation/calendar_screen.dart';
 import 'features/readings/presentation/readings_screen.dart';
@@ -10,9 +11,21 @@ import 'features/habits/presentation/habit_providers.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
+import 'services/firebase_service.dart';
+
+// Auth state provider
+final authStateProvider = StreamProvider<User?>((ref) {
+  return FirebaseAuth.instance.authStateChanges();
+});
+
+final isLoadingProvider = StateProvider<bool>((ref) => true);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize Firebase
+  await FirebaseService.initialize();
+  
   final prefs = await SharedPreferences.getInstance();
 
   runApp(
@@ -25,11 +38,13 @@ void main() async {
   );
 }
 
-class CatholicHabitsApp extends StatelessWidget {
+class CatholicHabitsApp extends ConsumerWidget {
   const CatholicHabitsApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authStateProvider);
+
     return MaterialApp(
       title: 'Hábitos',
       localizationsDelegates: const [
@@ -57,7 +72,81 @@ class CatholicHabitsApp extends StatelessWidget {
         useMaterial3: true,
       ),
       themeMode: ThemeMode.system,
-      home: const MainNavigation(),
+      home: authState.when(
+        data: (user) => user == null ? const SignInScreen() : const MainNavigation(),
+        loading: () => const LoadingScreen(),
+        error: (e, _) => Scaffold(
+          body: Center(child: Text('Error: $e')),
+        ),
+      ),
+    );
+  }
+}
+
+// Sign In Screen
+class SignInScreen extends ConsumerWidget {
+  const SignInScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.self_improvement,
+                size: 80,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              const SizedBox(height: 24),
+              Text(
+                'Hábitos',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Grow in faith, one day at a time',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 48),
+              ElevatedButton.icon(
+                onPressed: () async {
+                  try {
+                    await FirebaseService.signInAnonymously();
+                  } catch (e) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Sign in failed: $e')),
+                      );
+                    }
+                  }
+                },
+                icon: const Icon(Icons.login),
+                label: const Text('Sign In Anonymously'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Loading Screen
+class LoadingScreen extends StatelessWidget {
+  const LoadingScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }
