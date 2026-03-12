@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseService {
   static bool _initialized = false;
@@ -24,10 +25,28 @@ class FirebaseService {
   }
 
   /// Sign in with Google
-  static Future<User> signInWithGoogle() async {
-    // Note: Requires GoogleSignIn and OAuth configuration
-    // For now, using anonymous auth
-    return signInAnonymously();
+  static Future<User?> signInWithGoogle() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    
+    // Trigger the Google Sign-In flow
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+    
+    if (googleUser == null) return null; // User cancelled
+    
+    // Get the auth details
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    
+    // Create credentials
+    final OAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    
+    // Sign in to Firebase
+    final UserCredential userCredential = 
+        await FirebaseAuth.instance.signInWithCredential(credential);
+    
+    return userCredential.user;
   }
 
   /// Sign out

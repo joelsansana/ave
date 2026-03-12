@@ -117,7 +117,12 @@ class SignInScreen extends ConsumerWidget {
               ElevatedButton.icon(
                 onPressed: () async {
                   try {
-                    await FirebaseService.signInAnonymously();
+                    final user = await FirebaseService.signInWithGoogle();
+                    if (user == null && context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Sign in cancelled')),
+                      );
+                    }
                   } catch (e) {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -127,7 +132,7 @@ class SignInScreen extends ConsumerWidget {
                   }
                 },
                 icon: const Icon(Icons.login),
-                label: const Text('Sign In Anonymously'),
+                label: const Text('Sign In with Google'),
               ),
             ],
           ),
