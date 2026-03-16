@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:habitos/l10n/app_localizations.dart';
 import '../data/prayers_data.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ReadingsScreen extends StatefulWidget {
   const ReadingsScreen({super.key});
@@ -16,7 +17,7 @@ class _ReadingsScreenState extends State<ReadingsScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
   }
 
   @override
@@ -38,6 +39,7 @@ class _ReadingsScreenState extends State<ReadingsScreen>
             Tab(text: 'Rosário'),
             Tab(text: 'Via Sacra'),
             Tab(text: 'Orações'),
+            Tab(text: 'Música'),
           ],
         ),
       ),
@@ -48,6 +50,7 @@ class _ReadingsScreenState extends State<ReadingsScreen>
           _RosarioTab(),
           _ViaSacraTab(),
           _PrayersTab(),
+          _MusicTab(),
         ],
       ),
     );
@@ -363,6 +366,158 @@ class _PrayersTab extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _MusicTab extends StatefulWidget {
+  const _MusicTab();
+
+  @override
+  State<_MusicTab> createState() => _MusicTabState();
+}
+
+class _MusicTabState extends State<_MusicTab> {
+  late YoutubePlayerController _controller;
+  bool _isPlayerReady = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = YoutubePlayerController(
+      initialVideoId: 'oaP6Gv1AcXo',
+      flags: const YoutubePlayerFlags(
+        hideControls: false,
+        loop: true,
+        autoPlay: false,
+        mute: false,
+      ),
+    )..addListener(_listener);
+  }
+
+  void _listener() {
+    if (_isPlayerReady && mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_listener);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Card(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.music_note, size: 28),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Música para Oração',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Cânticos gregorianos para meditação e reflexão',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          
+          // YouTube Player
+          Card(
+            clipBehavior: Clip.antiAlias,
+            child: Column(
+              children: [
+                YoutubePlayer(
+                  controller: _controller,
+                  showVideoProgressIndicator: true,
+                  progressIndicatorColor: Theme.of(context).colorScheme.primary,
+                  onReady: () {
+                    _isPlayerReady = true;
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.replay_10),
+                        onPressed: () {
+                          _controller.seekTo(_controller.value.position - const Duration(seconds: 10));
+                        },
+                      ),
+                      const SizedBox(width: 16),
+                      IconButton(
+                        icon: Icon(
+                          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                          size: 32,
+                        ),
+                        onPressed: () {
+                          _controller.value.isPlaying
+                              ? _controller.pause()
+                              : _controller.play();
+                        },
+                      ),
+                      const SizedBox(width: 16),
+                      IconButton(
+                        icon: const Icon(Icons.forward_10),
+                        onPressed: () {
+                          _controller.seekTo(_controller.value.position + const Duration(seconds: 10));
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          
+          // Info card
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Sobre este vídeo',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'O canto gregoriano é a forma de música sacra monocórdica "
+                    "praticada na Igreja Católica durante a Idade Média. "
+                    "É conhecido pela sua simplicidade, melancolia e capacidade "
+                    "de induzir à contemplação e oração.',
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
