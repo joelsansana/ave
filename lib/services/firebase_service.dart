@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,7 +12,22 @@ class FirebaseService {
   static Future<void> initialize() async {
     if (_initialized) return;
     
-    await Firebase.initializeApp();
+    // Only initialize on supported platforms
+    if (kIsWeb) {
+      // For web, use default Firebase config
+      await Firebase.initializeApp(
+        options: const FirebaseOptions(
+          apiKey: "AIzaSyDRHItRZumZM2dQWIKdHxbCTREdPbMNQzE",
+          authDomain: "habits-app-915f2.firebaseapp.com",
+          projectId: "habits-app-915f2",
+          storageBucket: "habits-app-915f2.firebasestorage.app",
+          messagingSenderId: "66957835605",
+          appId: "1:66957835605:android:1e10ef9228c6bdda6403dc"
+        )
+      );
+    } else {
+      await Firebase.initializeApp();
+    }
     _initialized = true;
   }
 
