@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habitos/l10n/app_localizations.dart';
 import '../data/prayers_data.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ReadingsScreen extends StatefulWidget {
   const ReadingsScreen({super.key});
@@ -370,43 +369,8 @@ class _PrayersTab extends StatelessWidget {
   }
 }
 
-class _MusicTab extends StatefulWidget {
+class _MusicTab extends StatelessWidget {
   const _MusicTab();
-
-  @override
-  State<_MusicTab> createState() => _MusicTabState();
-}
-
-class _MusicTabState extends State<_MusicTab> {
-  late YoutubePlayerController _controller;
-  bool _isPlayerReady = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = YoutubePlayerController(
-      initialVideoId: 'oaP6Gv1AcXo',
-      flags: const YoutubePlayerFlags(
-        hideControls: false,
-        loop: true,
-        autoPlay: false,
-        mute: false,
-      ),
-    )..addListener(_listener);
-  }
-
-  void _listener() {
-    if (_isPlayerReady && mounted) {
-      setState(() {});
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller.removeListener(_listener);
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -443,53 +407,35 @@ class _MusicTabState extends State<_MusicTab> {
           ),
           const SizedBox(height: 16),
           
-          // YouTube Player
+          // YouTube embed
           Card(
             clipBehavior: Clip.antiAlias,
-            child: Column(
-              children: [
-                YoutubePlayer(
-                  controller: _controller,
-                  showVideoProgressIndicator: true,
-                  progressIndicatorColor: Theme.of(context).colorScheme.primary,
-                  onReady: () {
-                    _isPlayerReady = true;
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.replay_10),
-                        onPressed: () {
-                          _controller.seekTo(_controller.value.position - const Duration(seconds: 10));
-                        },
-                      ),
-                      const SizedBox(width: 16),
-                      IconButton(
-                        icon: Icon(
-                          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-                          size: 32,
-                        ),
-                        onPressed: () {
-                          _controller.value.isPlaying
-                              ? _controller.pause()
-                              : _controller.play();
-                        },
-                      ),
-                      const SizedBox(width: 16),
-                      IconButton(
-                        icon: const Icon(Icons.forward_10),
-                        onPressed: () {
-                          _controller.seekTo(_controller.value.position + const Duration(seconds: 10));
-                        },
-                      ),
-                    ],
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Container(
+                color: Colors.black,
+                child: const Center(
+                  child: Icon(
+                    Icons.play_circle_fill,
+                    size: 64,
+                    color: Colors.white70,
                   ),
                 ),
-              ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          
+          // Link to open in YouTube
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.open_in_new),
+              title: const Text('Abrir no YouTube'),
+              subtitle: const Text('Gregorian Chant - Psalm 23'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () {
+                // TODO: Use url_launcher to open YouTube
+              },
             ),
           ),
           const SizedBox(height: 16),
@@ -507,10 +453,7 @@ class _MusicTabState extends State<_MusicTab> {
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'O canto gregoriano é a forma de música sacra monocórdica "
-                    "praticada na Igreja Católica durante a Idade Média. "
-                    "É conhecido pela sua simplicidade, melancolia e capacidade "
-                    "de induzir à contemplação e oração.',
+                    'O canto gregoriano é a forma de música sacra monocórdica praticada na Igreja Católica durante a Idade Média. É conhecido pela sua simplicidade, melancolia e capacidade de induzir à contemplação e oração.',
                   ),
                 ],
               ),
