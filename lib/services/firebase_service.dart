@@ -27,6 +27,11 @@ class FirebaseService {
       );
     } else {
       await Firebase.initializeApp();
+      // Enable offline persistence for Firestore
+      FirebaseFirestore.instance.settings = const Settings(
+        persistenceEnabled: true,
+        cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
+      );
     }
     _initialized = true;
   }
