@@ -37,6 +37,60 @@ class Habit {
     );
   }
 
+  /// Calculate current streak (consecutive days completed)
+  int get currentStreak {
+    if (completedDates.isEmpty) return 0;
+    
+    final sortedDates = completedDates.toList()..sort((a, b) => b.compareTo(a));
+    final today = DateTime.now();
+    final todayOnly = DateTime(today.year, today.month, today.day);
+    
+    // Check if completed today or yesterday
+    final mostRecent = DateTime(sortedDates.first.year, sortedDates.first.month, sortedDates.first.day);
+    final daysDiff = todayOnly.difference(mostRecent).inDays;
+    
+    if (daysDiff > 1) return 0; // Streak broken
+    
+    int streak = 0;
+    DateTime checkDate = daysDiff == 0 ? todayOnly : todayOnly.subtract(const Duration(days: 1));
+    
+    for (final date in sortedDates) {
+      final dateOnly = DateTime(date.year, date.month, date.day);
+      if (dateOnly == checkDate) {
+        streak++;
+        checkDate = checkDate.subtract(const Duration(days: 1));
+      } else if (dateOnly.isBefore(checkDate)) {
+        break;
+      }
+    }
+    
+    return streak;
+  }
+
+  /// Calculate longest streak ever
+  int get longestStreak {
+    if (completedDates.isEmpty) return 0;
+    
+    final sortedDates = completedDates.toList()..sort();
+    int maxStreak = 1;
+    int currentStreak = 1;
+    
+    for (int i = 1; i < sortedDates.length; i++) {
+      final prevDate = DateTime(sortedDates[i-1].year, sortedDates[i-1].month, sortedDates[i-1].day);
+      final currDate = DateTime(sortedDates[i].year, sortedDates[i].month, sortedDates[i].day);
+      final diff = currDate.difference(prevDate).inDays;
+      
+      if (diff == 1) {
+        currentStreak++;
+        maxStreak = currentStreak > maxStreak ? currentStreak : maxStreak;
+      } else if (diff > 1) {
+        currentStreak = 1;
+      }
+    }
+    
+    return maxStreak;
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
