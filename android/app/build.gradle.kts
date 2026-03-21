@@ -22,10 +22,7 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.sansana.habit"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -33,15 +30,18 @@ android {
         multiDexEnabled = true
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("key.jks")
+            storePassword = "habitos123"
+            keyAlias = "habitos"
+            keyPassword = "habitos123"
+        }
+    }
+
     buildTypes {
         release {
-            // Signing config for release builds
-            signingConfig {
-                storeFile = file("key.jks")
-                storePassword = "habitos123"
-                keyAlias = "habitos"
-                keyPassword = "habitos123"
-            }
+            signingConfig = signingConfigs.getByName("release")
         }
         debug {
             signingConfig = signingConfigs.getByName("debug")
