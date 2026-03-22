@@ -112,4 +112,47 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get profileTotalDays => 'Total Dias';
+
+  @override
+  String get notificationsTitle => 'Notificações';
+
+  @override
+  String get notificationsEnabled => 'Ativar Notificações';
+
+  @override
+  String get notificationsEnabledDesc => 'Receba lembretes e atualizações';
+
+  @override
+  String get notificationsDailyReminder => 'Lembrete Diário';
+
+  @override
+  String get notificationsDailyReminderEnabled => 'Lembrete Diário';
+
+  @override
+  String get notificationsDailyReminderDesc =>
+      'Receba um lembrete diário para os seus hábitos';
+
+  @override
+  String get notificationsDailyReminderTime => 'Hora do Lembrete';
+
+  @override
+  String get notificationsTypes => 'Tipos de Notificação';
+
+  @override
+  String get notificationsHabitReminders => 'Lembretes de Hábitos';
+
+  @override
+  String get notificationsHabitRemindersDesc =>
+      'Notificações sobre os seus hábitos';
+
+  @override
+  String get notificationsNfpReminders => 'Lembretes de PNF';
+
+  @override
+  String get notificationsNfpRemindersDesc =>
+      'Lembretes para registar sintomas';
+
+  @override
+  String get notificationsInfoNote =>
+      'As notificações push requerem configuração adicional do Firebase Cloud Messaging.';
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habitos/l10n/app_localizations.dart';
+import 'package:habitos/features/profile/presentation/notifications_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -43,7 +44,13 @@ class ProfileScreen extends StatelessWidget {
             _MenuItem(
               icon: Icons.notifications,
               title: 'Notificações',
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const NotificationsScreen(),
+                  ),
+                );
+              },
             ),
             _MenuItem(
               icon: Icons.star,

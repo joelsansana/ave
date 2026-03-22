@@ -47,5 +47,19 @@
   "add": "Adicionar",
   "profileHabitsCount": "Hábitos",
   "profileStreakDays": "Dias Seguidos",
-  "profileTotalDays": "Total Dias"
+  "profileTotalDays": "Total Dias",
+
+  "notificationsTitle": "Notificações",
+  "notificationsEnabled": "Ativar Notificações",
+  "notificationsEnabledDesc": "Receba lembretes e atualizações",
+  "notificationsDailyReminder": "Lembrete Diário",
+  "notificationsDailyReminderEnabled": "Lembrete Diário",
+  "notificationsDailyReminderDesc": "Receba um lembrete diário para os seus hábitos",
+  "notificationsDailyReminderTime": "Hora do Lembrete",
+  "notificationsTypes": "Tipos de Notificação",
+  "notificationsHabitReminders": "Lembretes de Hábitos",
+  "notificationsHabitRemindersDesc": "Notificações sobre os seus hábitos",
+  "notificationsNfpReminders": "Lembretes de PNF",
+  "notificationsNfpRemindersDesc": "Lembretes para registar sintomas",
+  "notificationsInfoNote": "As notificações push requerem configuração adicional do Firebase Cloud Messaging."
 }

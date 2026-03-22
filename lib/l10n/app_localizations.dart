@@ -297,6 +297,84 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Total Dias'**
   String get profileTotalDays;
+
+  /// No description provided for @notificationsTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Notificações'**
+  String get notificationsTitle;
+
+  /// No description provided for @notificationsEnabled.
+  ///
+  /// In pt, this message translates to:
+  /// **'Ativar Notificações'**
+  String get notificationsEnabled;
+
+  /// No description provided for @notificationsEnabledDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Receba lembretes e atualizações'**
+  String get notificationsEnabledDesc;
+
+  /// No description provided for @notificationsDailyReminder.
+  ///
+  /// In pt, this message translates to:
+  /// **'Lembrete Diário'**
+  String get notificationsDailyReminder;
+
+  /// No description provided for @notificationsDailyReminderEnabled.
+  ///
+  /// In pt, this message translates to:
+  /// **'Lembrete Diário'**
+  String get notificationsDailyReminderEnabled;
+
+  /// No description provided for @notificationsDailyReminderDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Receba um lembrete diário para os seus hábitos'**
+  String get notificationsDailyReminderDesc;
+
+  /// No description provided for @notificationsDailyReminderTime.
+  ///
+  /// In pt, this message translates to:
+  /// **'Hora do Lembrete'**
+  String get notificationsDailyReminderTime;
+
+  /// No description provided for @notificationsTypes.
+  ///
+  /// In pt, this message translates to:
+  /// **'Tipos de Notificação'**
+  String get notificationsTypes;
+
+  /// No description provided for @notificationsHabitReminders.
+  ///
+  /// In pt, this message translates to:
+  /// **'Lembretes de Hábitos'**
+  String get notificationsHabitReminders;
+
+  /// No description provided for @notificationsHabitRemindersDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Notificações sobre os seus hábitos'**
+  String get notificationsHabitRemindersDesc;
+
+  /// No description provided for @notificationsNfpReminders.
+  ///
+  /// In pt, this message translates to:
+  /// **'Lembretes de PNF'**
+  String get notificationsNfpReminders;
+
+  /// No description provided for @notificationsNfpRemindersDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Lembretes para registar sintomas'**
+  String get notificationsNfpRemindersDesc;
+
+  /// No description provided for @notificationsInfoNote.
+  ///
+  /// In pt, this message translates to:
+  /// **'As notificações push requerem configuração adicional do Firebase Cloud Messaging.'**
+  String get notificationsInfoNote;
 }
 
 class _AppLocalizationsDelegate
