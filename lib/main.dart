@@ -5,6 +5,7 @@ import 'features/calendar/presentation/calendar_screen.dart';
 import 'features/readings/presentation/readings_screen.dart';
 import 'features/profile/presentation/profile_screen.dart';
 import 'features/nfp/presentation/nfp_screen.dart';
+import 'features/saint/presentation/saint_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'features/habits/presentation/habit_providers.dart';
@@ -172,6 +173,7 @@ class _MainNavigationState extends State<MainNavigation> {
     ReadingsScreen(),
     NFPScreen(),
     ProfileScreen(),
+    SaintScreen(),
   ];
 
   @override
@@ -210,6 +212,11 @@ class _MainNavigationState extends State<MainNavigation> {
             icon: Icon(Icons.person_outlined),
             selectedIcon: Icon(Icons.person),
             label: AppLocalizations.of(context)!.profileTab,
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.church_outlined),
+            selectedIcon: Icon(Icons.church),
+            label: 'Santo',
           ),
         ],
       ),
