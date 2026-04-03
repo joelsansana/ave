@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../habits/domain/habit.dart';
 import '../../habits/presentation/habit_providers.dart';
+import '../data/catholic_feasts.dart';
 
 class CalendarScreen extends ConsumerStatefulWidget {
   const CalendarScreen({super.key});
@@ -34,7 +35,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     });
   }
 
-  String _monthName(int month, AppLocalizations l) {
+  String _monthName(int month) {
     const months = [
       'Janeiro', 'Fevereiro', 'Março', 'Abril',
       'Maio', 'Junho', 'Julho', 'Agosto',
@@ -50,7 +51,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
 
     final daysInMonth = DateTime(_focusedMonth.year, _focusedMonth.month + 1, 0).day;
     final firstDayOfMonth = DateTime(_focusedMonth.year, _focusedMonth.month, 1);
-    final startingWeekday = firstDayOfMonth.weekday % 7; // Sunday = 0
+    final startingWeekday = firstDayOfMonth.weekday % 7;
 
     // Streak calculation
     int currentStreak = 0;
@@ -72,6 +73,8 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         ? 0
         : (totalCompleted / daysInMonth * 100).round();
 
+    final monthFeasts = CatholicFeasts.getFeastsForMonth(_focusedMonth.year, _focusedMonth.month);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.calendarTitle),
@@ -90,7 +93,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                   onPressed: _previousMonth,
                 ),
                 Text(
-                  '${_monthName(_focusedMonth.month, AppLocalizations.of(context)!)} ${_focusedMonth.year}',
+                  '${_monthName(_focusedMonth.month)} ${_focusedMonth.year}',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 IconButton(
@@ -129,6 +132,21 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
             ),
           ),
           const SizedBox(height: 16),
+
+          // Feast legend
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('● ', style: TextStyle(color: Colors.purple.shade400, fontSize: 10)),
+                Text('Festividade  ', style: Theme.of(context).textTheme.bodySmall),
+                Text('● ', style: TextStyle(color: Colors.red, fontSize: 10)),
+                Text('Dia Santo', style: Theme.of(context).textTheme.bodySmall),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
 
           // Weekday headers
           Padding(
@@ -172,16 +190,51 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                       date.month == _today.month &&
                       date.day == _today.day;
                   final isCompleted = completedDays[date] ?? false;
+                  final feast = CatholicFeasts.getFeastForDate(date);
 
                   return _DayCell(
                     day: day,
                     isToday: isToday,
                     isCompleted: isCompleted,
+                    feast: feast,
                   );
                 },
               ),
             ),
           ),
+
+          // Month feasts list
+          if (monthFeasts.isNotEmpty)
+            Container(
+              height: 36,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: monthFeasts.length,
+                separatorBuilder: (_, __) => const SizedBox(width: 8),
+                itemBuilder: (context, index) {
+                  final feast = monthFeasts[index];
+                  return Chip(
+                    label: Text(
+                      '${feast.day}: ${feast.name}',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: feast.isHolyDayOfObligation
+                            ? Colors.red.shade700
+                            : Colors.purple.shade700,
+                      ),
+                    ),
+                    backgroundColor: feast.isHolyDayOfObligation
+                        ? Colors.red.shade50
+                        : Colors.purple.shade50,
+                    padding: EdgeInsets.zero,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    side: BorderSide.none,
+                    visualDensity: VisualDensity.compact,
+                  );
+                },
+              ),
+            ),
         ],
       ),
     );
@@ -238,11 +291,13 @@ class _DayCell extends StatelessWidget {
   final int day;
   final bool isToday;
   final bool isCompleted;
+  final CatholicFeast? feast;
 
   const _DayCell({
     required this.day,
     required this.isToday,
     required this.isCompleted,
+    this.feast,
   });
 
   @override
@@ -256,14 +311,34 @@ class _DayCell extends StatelessWidget {
             ? Border.all(color: Theme.of(context).colorScheme.primary, width: 2)
             : null,
       ),
-      child: Center(
-        child: Text(
-          '$day',
-          style: TextStyle(
-            fontWeight: isCompleted || isToday ? FontWeight.bold : null,
-            color: isCompleted ? Colors.green.shade700 : null,
+      child: Stack(
+        children: [
+          Center(
+            child: Text(
+              '$day',
+              style: TextStyle(
+                fontWeight: isCompleted || isToday ? FontWeight.bold : null,
+                color: isCompleted ? Colors.green.shade700 : null,
+              ),
+            ),
           ),
-        ),
+          if (feast != null)
+            Positioned(
+              bottom: 2,
+              left: 0,
+              right: 0,
+              child: Text(
+                '●',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 6,
+                  color: feast!.isHolyDayOfObligation
+                      ? Colors.red
+                      : Colors.purple.shade400,
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
