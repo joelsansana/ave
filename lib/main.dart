@@ -6,6 +6,7 @@ import 'features/readings/presentation/readings_screen.dart';
 import 'features/profile/presentation/profile_screen.dart';
 import 'features/nfp/presentation/nfp_screen.dart';
 import 'features/saint/presentation/saint_screen.dart';
+import 'features/lectio_divina/presentation/lectio_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'features/habits/presentation/habit_providers.dart';
@@ -13,6 +14,8 @@ import 'features/habits/presentation/habit_providers.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
 import 'services/firebase_service.dart';
+import 'services/notification_service.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 // Auth state provider
 final authStateProvider = StreamProvider<User?>((ref) {
@@ -28,6 +31,13 @@ void main() async {
   await FirebaseService.initialize();
   
   final prefs = await SharedPreferences.getInstance();
+
+  // Initialize notifications
+  final notificationService = NotificationService();
+  await notificationService.initialize();
+  
+  // Set up FCM background handler
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   runApp(
     ProviderScope(
@@ -174,6 +184,7 @@ class _MainNavigationState extends State<MainNavigation> {
     NFPScreen(),
     ProfileScreen(),
     SaintScreen(),
+    LectioScreen(),
   ];
 
   @override
@@ -217,6 +228,11 @@ class _MainNavigationState extends State<MainNavigation> {
             icon: Icon(Icons.church_outlined),
             selectedIcon: Icon(Icons.church),
             label: 'Santo',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.auto_stories_outlined),
+            selectedIcon: Icon(Icons.auto_stories),
+            label: 'Lectio',
           ),
         ],
       ),

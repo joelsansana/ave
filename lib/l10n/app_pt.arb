@@ -61,5 +61,15 @@
   "notificationsHabitRemindersDesc": "Notificações sobre os seus hábitos",
   "notificationsNfpReminders": "Lembretes de PNF",
   "notificationsNfpRemindersDesc": "Lembretes para registar sintomas",
-  "notificationsInfoNote": "As notificações push requerem configuração adicional do Firebase Cloud Messaging."
+  "notificationsInfoNote": "As notificações push requerem configuração adicional do Firebase Cloud Messaging.",
+
+  "lectioTitle": "Lectio Divina",
+  "lectioLectio": "Lectio — Leitura",
+  "lectioLectioDesc": "Leia lentamente o texto sagrado",
+  "lectioMeditatio": "Meditatio — Meditação",
+  "lectioMeditatioDesc": "Reflicta sobre o que Deus lhe diz",
+  "lectioOratio": "Oratio — Oração",
+  "lectioOratioDesc": "Responda a Deus em oração",
+  "lectioContemplatio": "Contemplatio — Contemplação",
+  "lectioContemplatioDesc": "Descanse na presença de Deus"
 }

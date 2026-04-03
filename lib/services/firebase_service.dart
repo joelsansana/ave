@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseService {
@@ -96,59 +95,3 @@ class FirebaseService {
   }
 }
 
-class NotificationService {
-  static final FirebaseMessaging _messaging = FirebaseMessaging.instance;
-
-  /// Request notification permissions
-  static Future<void> requestPermissions() async {
-    await _messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-  }
-
-  /// Get FCM token
-  static Future<String?> getToken() async {
-    return await _messaging.getToken();
-  }
-
-  /// Subscribe to topic
-  static Future<void> subscribeToTopic(String topic) async {
-    await _messaging.subscribeToTopic(topic);
-  }
-
-  /// Unsubscribe from topic
-  static Future<void> unsubscribeFromTopic(String topic) async {
-    await _messaging.unsubscribeFromTopic(topic);
-  }
-
-  /// Configure notification handling
-  static void configure() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      // Handle foreground notifications
-      print('Message data: ${message.data}');
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      // Handle notification tap
-      print('Notification tapped: ${message.data}');
-    });
-  }
-
-  /// Schedule daily reminder
-  static Future<void> scheduleDailyReminder({
-    required int hour,
-    required int minute,
-    required String title,
-    required String body,
-  }) async {
-    // Note: For scheduling, you'd use flutter_local_notifications
-    // This is placeholder for local notifications
-    print('Daily reminder scheduled for $hour:$minute');
-  }
-}

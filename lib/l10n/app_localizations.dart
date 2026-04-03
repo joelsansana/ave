@@ -375,6 +375,60 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'As notificações push requerem configuração adicional do Firebase Cloud Messaging.'**
   String get notificationsInfoNote;
+
+  /// No description provided for @lectioTitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Lectio Divina'**
+  String get lectioTitle;
+
+  /// No description provided for @lectioLectio.
+  ///
+  /// In pt, this message translates to:
+  /// **'Lectio — Leitura'**
+  String get lectioLectio;
+
+  /// No description provided for @lectioLectioDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Leia lentamente o texto sagrado'**
+  String get lectioLectioDesc;
+
+  /// No description provided for @lectioMeditatio.
+  ///
+  /// In pt, this message translates to:
+  /// **'Meditatio — Meditação'**
+  String get lectioMeditatio;
+
+  /// No description provided for @lectioMeditatioDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Reflicta sobre o que Deus lhe diz'**
+  String get lectioMeditatioDesc;
+
+  /// No description provided for @lectioOratio.
+  ///
+  /// In pt, this message translates to:
+  /// **'Oratio — Oração'**
+  String get lectioOratio;
+
+  /// No description provided for @lectioOratioDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Responda a Deus em oração'**
+  String get lectioOratioDesc;
+
+  /// No description provided for @lectioContemplatio.
+  ///
+  /// In pt, this message translates to:
+  /// **'Contemplatio — Contemplação'**
+  String get lectioContemplatio;
+
+  /// No description provided for @lectioContemplatioDesc.
+  ///
+  /// In pt, this message translates to:
+  /// **'Descanse na presença de Deus'**
+  String get lectioContemplatioDesc;
 }
 
 class _AppLocalizationsDelegate

@@ -155,4 +155,31 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get notificationsInfoNote =>
       'As notificações push requerem configuração adicional do Firebase Cloud Messaging.';
+
+  @override
+  String get lectioTitle => 'Lectio Divina';
+
+  @override
+  String get lectioLectio => 'Lectio — Leitura';
+
+  @override
+  String get lectioLectioDesc => 'Leia lentamente o texto sagrado';
+
+  @override
+  String get lectioMeditatio => 'Meditatio — Meditação';
+
+  @override
+  String get lectioMeditatioDesc => 'Reflicta sobre o que Deus lhe diz';
+
+  @override
+  String get lectioOratio => 'Oratio — Oração';
+
+  @override
+  String get lectioOratioDesc => 'Responda a Deus em oração';
+
+  @override
+  String get lectioContemplatio => 'Contemplatio — Contemplação';
+
+  @override
+  String get lectioContemplatioDesc => 'Descanse na presença de Deus';
 }
