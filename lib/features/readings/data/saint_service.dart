@@ -56,8 +56,36 @@ class SaintService {
 
   static Future<Saint> getSaintOfDay() async {
     await Future.delayed(const Duration(milliseconds: 100));
-    final dayOfYear = DateTime.now().difference(DateTime(DateTime.now().year, 1, 1)).inDays;
-    return _saints[dayOfYear % _saints.length];
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    // Try to find saint whose feast day matches today
+    for (final saint in _saints) {
+      final feastDate = _parseFeastDay(saint.feastDay, now.year);
+      if (feastDate.year == today.year &&
+          feastDate.month == today.month &&
+          feastDate.day == today.day) {
+        return saint;
+      }
+    }
+
+    // Fallback: use day of month % saints.length
+    return _saints[today.day % _saints.length];
+  }
+
+  static DateTime _parseFeastDay(String feastDay, int year) {
+    // Parse "4 de Outubro" -> October 4
+    // Parse "15 de Outubro" -> October 15
+    final parts = feastDay.split(' ');
+    if (parts.length < 3) return DateTime(year, 1, 1);
+    final day = int.tryParse(parts[0]) ?? 1;
+    final monthNames = {
+      'Janeiro': 1, 'Fevereiro': 2, 'Março': 3, 'Abril': 4,
+      'Maio': 5, 'Junho': 6, 'Julho': 7, 'Agosto': 8,
+      'Setembro': 9, 'Outubro': 10, 'Novembro': 11, 'Dezembro': 12
+    };
+    final month = monthNames[parts[2]] ?? 1;
+    return DateTime(year, month, day);
   }
 
   static Future<List<Saint>> getAllSaints() async {
