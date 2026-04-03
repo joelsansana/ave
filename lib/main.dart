@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'services/firebase_service.dart';
 import 'features/habits/presentation/home_screen.dart';
 import 'features/calendar/presentation/calendar_screen.dart';
 import 'features/readings/presentation/readings_screen.dart';
@@ -13,13 +13,14 @@ import 'features/habits/presentation/habit_providers.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
-import 'services/firebase_service.dart';
+
 import 'services/notification_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-// Auth state provider
-final authStateProvider = StreamProvider<User?>((ref) {
-  return FirebaseAuth.instance.authStateChanges();
+// Auth state provider - anonymous access, no login required
+final authStateProvider = StateProvider<bool>((ref) => false);
+final isAuthenticatedProvider = Provider<bool>((ref) {
+  return ref.watch(authStateProvider);
 });
 
 final isLoadingProvider = StateProvider<bool>((ref) => true);
@@ -83,20 +84,14 @@ class CatholicHabitsApp extends ConsumerWidget {
         useMaterial3: true,
       ),
       themeMode: ThemeMode.system,
-      home: authState.when(
-        data: (user) => user == null ? const SignInScreen() : const MainNavigation(),
-        loading: () => const LoadingScreen(),
-        error: (e, _) => Scaffold(
-          body: Center(child: Text('Error: $e')),
-        ),
-      ),
+      home: authState ? const MainNavigation() : const WelcomeScreen(),
     );
   }
 }
 
-// Sign In Screen
-class SignInScreen extends ConsumerWidget {
-  const SignInScreen({super.key});
+// Welcome Screen
+class WelcomeScreen extends ConsumerWidget {
+  const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -125,25 +120,12 @@ class SignInScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 48),
-              ElevatedButton.icon(
-                onPressed: () async {
-                  try {
-                    final user = await FirebaseService.signInWithGoogle();
-                    if (user == null && context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Sign in cancelled')),
-                      );
-                    }
-                  } catch (e) {
-                    if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Sign in failed: $e')),
-                      );
-                    }
-                  }
+              FilledButton.icon(
+                onPressed: () {
+                  ref.read(authStateProvider.notifier).state = true;
                 },
-                icon: const Icon(Icons.login),
-                label: const Text('Sign In with Google'),
+                icon: const Icon(Icons.arrow_forward),
+                label: const Text('Get Started'),
               ),
             ],
           ),
