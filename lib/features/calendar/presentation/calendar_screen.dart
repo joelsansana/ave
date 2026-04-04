@@ -139,10 +139,16 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('● ', style: TextStyle(color: Colors.purple.shade400, fontSize: 10)),
-                Text('Festividade  ', style: Theme.of(context).textTheme.bodySmall),
-                Text('● ', style: TextStyle(color: Colors.red, fontSize: 10)),
-                Text('Dia Santo', style: Theme.of(context).textTheme.bodySmall),
+                Container(width: 8, height: 8, decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.purple.shade400)),
+                Text(' Festividade  ', style: Theme.of(context).textTheme.bodySmall),
+                Container(width: 8, height: 8, decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red)),
+                Text(' Dia Santo  ', style: Theme.of(context).textTheme.bodySmall),
+                Container(width: 8, height: 8, decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue.shade700)),
+                Text(' Abstenção Total  ', style: Theme.of(context).textTheme.bodySmall),
+                Container(width: 8, height: 8, decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.orange)),
+                Text(' Abstenção Parcial  ', style: Theme.of(context).textTheme.bodySmall),
+                Text('† ', style: TextStyle(color: Colors.brown, fontSize: 12, fontWeight: FontWeight.bold)),
+                Text('Jejum', style: Theme.of(context).textTheme.bodySmall),
               ],
             ),
           ),
@@ -216,17 +222,25 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                   final feast = monthFeasts[index];
                   return Chip(
                     label: Text(
-                      '${feast.day}: ${feast.name}',
+                      '${feast.day}: ${feast.name}${feast.isHolyDayOfObligation ? ' ⬥' : feast.isFullAbstinence ? ' ◆' : feast.isPartialAbstinence ? ' ◐' : ''}',
                       style: TextStyle(
                         fontSize: 11,
                         color: feast.isHolyDayOfObligation
                             ? Colors.red.shade700
-                            : Colors.purple.shade700,
+                            : feast.isFullAbstinence
+                                ? Colors.blue.shade700
+                                : feast.isPartialAbstinence
+                                    ? Colors.orange.shade700
+                                    : Colors.purple.shade700,
                       ),
                     ),
                     backgroundColor: feast.isHolyDayOfObligation
                         ? Colors.red.shade50
-                        : Colors.purple.shade50,
+                        : feast.isFullAbstinence
+                            ? Colors.blue.shade50
+                            : feast.isPartialAbstinence
+                                ? Colors.orange.shade50
+                                : Colors.purple.shade50,
                     padding: EdgeInsets.zero,
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     side: BorderSide.none,
@@ -327,15 +341,60 @@ class _DayCell extends StatelessWidget {
               bottom: 2,
               left: 0,
               right: 0,
-              child: Text(
-                '●',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 6,
-                  color: feast!.isHolyDayOfObligation
-                      ? Colors.red
-                      : Colors.purple.shade400,
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (feast!.isHolyDayOfObligation)
+                    Container(
+                      width: 5,
+                      height: 5,
+                      margin: const EdgeInsets.only(right: 1),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.red,
+                      ),
+                    ),
+                  if (feast!.isFullAbstinence)
+                    Container(
+                      width: 5,
+                      height: 5,
+                      margin: const EdgeInsets.only(left: 1),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.blue.shade700,
+                      ),
+                    ),
+                  if (feast!.isPartialAbstinence)
+                    Container(
+                      width: 5,
+                      height: 5,
+                      margin: const EdgeInsets.only(left: 1),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.orange,
+                      ),
+                    ),
+                  if (feast!.isFastingDay && !feast!.isFullAbstinence && !feast!.isPartialAbstinence)
+                    Container(
+                      width: 5,
+                      height: 5,
+                      margin: const EdgeInsets.only(left: 1),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.brown,
+                      ),
+                    ),
+                  if (!feast!.isHolyDayOfObligation && !feast!.isFullAbstinence && !feast!.isPartialAbstinence && !feast!.isFastingDay)
+                    Container(
+                      width: 5,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.purple.shade400,
+                      ),
+                    ),
+                ],
               ),
             ),
         ],

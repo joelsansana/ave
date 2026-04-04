@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:habitos/l10n/app_localizations.dart';
 import '../data/prayers_data.dart';
+import '../data/rosary_mysteries.dart';
 
 class ReadingsScreen extends StatefulWidget {
   const ReadingsScreen({super.key});
@@ -138,10 +139,26 @@ class _ReadingCard extends StatelessWidget {
 class _RosarioTab extends StatelessWidget {
   const _RosarioTab();
 
+  String _getDayName(int weekday) {
+    const days = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+    return days[weekday - 1];
+  }
+
+  Color _getMysteryColor(String colorName) {
+    switch (colorName) {
+      case 'yellow': return Colors.yellow.shade700;
+      case 'lightBlue': return Colors.lightBlue;
+      case 'red': return Colors.red.shade700;
+      case 'blue': return Colors.blue.shade700;
+      default: return Colors.blue;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final rosario = PrayersData.Rosario;
-    
+    final todaysMystery = RosaryMysteries.getTodaysMysteries();
+    final dayName = _getDayName(DateTime.now().weekday);
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -149,20 +166,32 @@ class _RosarioTab extends StatelessWidget {
         children: [
           // Mistérios do Dia
           Card(
-            color: Theme.of(context).colorScheme.primaryContainer,
+            color: _getMysteryColor(todaysMystery.color).withOpacity(0.2),
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Mistérios de Hoje',
-                    style: Theme.of(context).textTheme.titleLarge,
+                  Row(
+                    children: [
+                      Icon(Icons.today, color: _getMysteryColor(todaysMystery.color)),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Mistérios de Hoje',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Quarta-feira: Mistérios Gloriosos',
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    '$dayName-feira: ${todaysMystery.title}',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    todaysMystery.subtitle,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
               ),
@@ -171,7 +200,7 @@ class _RosarioTab extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Lista de orações
-          ...['Sinal da Cruz', 'Credo', 'Oferecimento', 'Pai Nosso', 'Ave Maria', 'Glória', 'Salve Rainha'].map((prayer) => 
+          ...['Sinal da Cruz', 'Credo', 'Oferecimento', 'Pai Nosso', 'Ave Maria', 'Glória', 'Salve Rainha'].map((prayer) =>
             Card(
               margin: const EdgeInsets.only(bottom: 8),
               child: ListTile(
@@ -184,29 +213,18 @@ class _RosarioTab extends StatelessWidget {
           ),
 
           const SizedBox(height: 16),
-          
-          // Mistérios
+
+          // Mistérios - all mysteries with expandable content
           Text(
-            'Mistérios',
+            'Todos os Mistérios',
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 8),
-          
-          _MysteriosSection(
-            title: 'Mistérios Gozosos',
-            subtitle: 'Segunda e Quinta',
-            color: Colors.yellow,
-          ),
-          _MysteriosSection(
-            title: 'Mistérios Dolorosos',
-            subtitle: 'Terça e Sexta',
-            color: Colors.red,
-          ),
-          _MysteriosSection(
-            title: 'Mistérios Gloriosos',
-            subtitle: 'Quarta, Sábado e Domingo',
-            color: Colors.blue,
-          ),
+
+          ...RosaryMysteries.getAll().map((mystery) => _MysteryExpandable(
+            mystery: mystery,
+            color: _getMysteryColor(mystery.color),
+          )),
         ],
       ),
     );
@@ -252,14 +270,12 @@ class _RosarioTab extends StatelessWidget {
   }
 }
 
-class _MysteriosSection extends StatelessWidget {
-  final String title;
-  final String subtitle;
+class _MysteryExpandable extends StatelessWidget {
+  final RosaryMystery mystery;
   final Color color;
 
-  const _MysteriosSection({
-    required this.title,
-    required this.subtitle,
+  const _MysteryExpandable({
+    required this.mystery,
     required this.color,
   });
 
@@ -267,15 +283,124 @@ class _MysteriosSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
-      child: ListTile(
+      child: ExpansionTile(
         leading: CircleAvatar(
           backgroundColor: color,
           child: const Icon(Icons.star, color: Colors.white, size: 20),
         ),
-        title: Text(title),
-        subtitle: Text(subtitle),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: () {},
+        title: Text(mystery.title),
+        subtitle: Text(mystery.subtitle),
+        children: mystery.meditations.map((m) => _MysteryMeditationTile(meditation: m, color: color)).toList(),
+      ),
+    );
+  }
+}
+
+class _MysteryMeditationTile extends StatelessWidget {
+  final MysteryMeditation meditation;
+  final Color color;
+
+  const _MysteryMeditationTile({
+    required this.meditation,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => _showMysteryDialog(context),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Row(
+          children: [
+            Container(
+              width: 28,
+              height: 28,
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.2),
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(
+                  meditation.decade.split('º')[0],
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: color),
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    meditation.title,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    meditation.scripture,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontStyle: FontStyle.italic,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(Icons.chevron_right, color: Colors.grey.shade400),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showMysteryDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(meditation.decade),
+            Text(
+              meditation.scripture,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                fontStyle: FontStyle.italic,
+                color: Colors.grey,
+              ),
+            ),
+          ],
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                meditation.title,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: color,
+                ),
+              ),
+              const Divider(),
+              Text(
+                meditation.meditation,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  height: 1.6,
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Fechar'),
+          ),
+        ],
       ),
     );
   }
